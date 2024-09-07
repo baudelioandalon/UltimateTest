@@ -13,9 +13,13 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
@@ -27,6 +31,7 @@ import androidx.compose.ui.text.font.FontWeight.Companion.Normal
 import androidx.compose.ui.text.font.FontWeight.Companion.SemiBold
 import androidx.compose.ui.text.font.FontWeight.Companion.Thin
 import androidx.compose.ui.unit.dp
+import androidx.core.view.WindowCompat
 import com.boreal.ultimatetest.uisystem.R
 
 
@@ -213,6 +218,7 @@ fun UltimateTestTheme(
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
+    SystemAppearance(darkTheme)
 
     MaterialTheme(
         colorScheme = colorScheme,
@@ -221,6 +227,22 @@ fun UltimateTestTheme(
     )
 }
 
+
+@Composable
+fun SystemAppearance(isDark: Boolean) {
+    val view = LocalView.current
+    val systemBarColor = android.graphics.Color.TRANSPARENT
+    LaunchedEffect(isDark) {
+        val window = (view.context as Activity).window
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        window.statusBarColor = systemBarColor
+//        window.navigationBarColor = systemBarColor//Esto es para el bottomNavigation
+        WindowCompat.getInsetsController(window, window.decorView).apply {
+            isAppearanceLightStatusBars = isDark
+            isAppearanceLightNavigationBars = isDark
+        }
+    }
+}
 
 @Composable
 fun font(name: String, res: Int, weight: FontWeight, style: FontStyle): Font {
