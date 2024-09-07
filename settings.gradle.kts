@@ -21,3 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "UltimateTest"
 include(":app")
+include (":library:core")
+include(":library:uisystem")

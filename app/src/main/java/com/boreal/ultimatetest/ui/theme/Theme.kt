@@ -3,35 +3,199 @@ package com.boreal.ultimatetest.ui.theme
 import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Shapes
+import androidx.compose.material.darkColors
+import androidx.compose.material.lightColors
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.FontWeight.Companion.Bold
+import androidx.compose.ui.text.font.FontWeight.Companion.Light
+import androidx.compose.ui.text.font.FontWeight.Companion.Medium
+import androidx.compose.ui.text.font.FontWeight.Companion.Normal
+import androidx.compose.ui.text.font.FontWeight.Companion.SemiBold
+import androidx.compose.ui.text.font.FontWeight.Companion.Thin
+import androidx.compose.ui.unit.dp
+import com.boreal.ultimatetest.uisystem.R
 
-private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
-)
+
+private enum class TypographyEmbedded() {
+    ROBOTO, MONTSERRAT
+}
+
+private val DEFAULT_TYPOGRAPHY = TypographyEmbedded.ROBOTO
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+    primary = PrimaryColor,
+    onPrimary = PrimaryEndColor,
+    secondary = md_theme_light_secondary,
+    onSecondary = md_theme_light_onSecondary,
+    error = md_theme_light_error,
+    onError = md_theme_light_onError,
+    background = md_theme_light_background,
+    onBackground = md_theme_light_onBackground,
+    surface = md_theme_light_surface,
+    onSurface = md_theme_light_onSurface,
 )
+
+private val DarkColorScheme = darkColorScheme(
+    primary = md_theme_dark_primary,
+    onPrimary = md_theme_dark_onPrimary,
+    secondary = md_theme_dark_secondary,
+    onSecondary = md_theme_dark_onSecondary,
+    error = md_theme_dark_error,
+    onError = md_theme_dark_onError,
+    background = md_theme_dark_background,
+    onBackground = md_theme_dark_onBackground,
+    surface = md_theme_dark_surface,
+    onSurface = md_theme_dark_onSurface,
+)
+
+private val AppShapes = Shapes(
+    small = RoundedCornerShape(4.dp),
+    medium = RoundedCornerShape(8.dp),
+    large = RoundedCornerShape(16.dp),
+)
+
+
+@Composable
+fun thinTypo() = FontFamily(
+    when (DEFAULT_TYPOGRAPHY) {
+        TypographyEmbedded.MONTSERRAT -> font(
+            "Montserrat",
+            R.font.montserrat_thin,
+            Thin,
+            FontStyle.Normal
+        )
+
+        else -> {
+
+            font(
+                "Roboto", R.font.roboto_thin, Thin, FontStyle.Normal
+            )
+        }
+    }
+)
+
+@Composable
+fun lightTypo() = FontFamily(
+    when (DEFAULT_TYPOGRAPHY) {
+        TypographyEmbedded.MONTSERRAT -> font(
+            "Montserrat",
+            R.font.roboto_light,
+            Light,
+            FontStyle.Normal
+        )
+
+        else -> {
+
+            font(
+                "Roboto", R.font.roboto_light, Light, FontStyle.Normal
+            )
+        }
+    }
+)
+
+@Composable
+fun regularTypo() = FontFamily(
+    when (DEFAULT_TYPOGRAPHY) {
+        TypographyEmbedded.MONTSERRAT -> font(
+            "Montserrat",
+            R.font.montserrat_regular,
+            Normal,
+            FontStyle.Normal
+        )
+
+        else -> {
+
+            font(
+                "Roboto", R.font.roboto, Normal, FontStyle.Normal
+            )
+        }
+    }
+)
+
+@Composable
+fun robotoMediumTypo() = FontFamily(
+    font(
+        "Roboto", R.font.roboto, Normal, FontStyle.Normal
+    )
+)
+
+@Composable
+fun mediumTypo() =
+    FontFamily(
+        when (DEFAULT_TYPOGRAPHY) {
+            TypographyEmbedded.MONTSERRAT -> font(
+                "Montserrat",
+                R.font.montserrat_medium,
+                Medium,
+                FontStyle.Normal
+            )
+
+            else -> {
+
+                font(
+                    "Roboto", R.font.roboto, Medium, FontStyle.Normal
+                )
+            }
+        }
+    )
+
+@Composable
+fun semiBoldTypo() = FontFamily(
+    when (DEFAULT_TYPOGRAPHY) {
+        TypographyEmbedded.MONTSERRAT -> font(
+            "Montserrat",
+            R.font.montserrat_semibold,
+            Normal,
+            FontStyle.Normal
+        )
+
+        else -> {
+
+            font(
+                "Roboto", R.font.roboto, SemiBold, FontStyle.Normal
+            )
+        }
+    }
+)
+
+@Composable
+fun boldTypo() =
+    FontFamily(
+        when (DEFAULT_TYPOGRAPHY) {
+            TypographyEmbedded.MONTSERRAT -> font(
+                "Montserrat",
+                R.font.montserrat_bold,
+                Bold,
+                FontStyle.Normal
+            )
+
+            else -> {
+
+                font(
+                    "Roboto", R.font.roboto_bold, Bold, FontStyle.Normal
+                )
+            }
+        }
+    )
+
+
+internal val LocalThemeIsDark = compositionLocalOf { mutableStateOf(false) }
+
+
 
 @Composable
 fun UltimateTestTheme(
@@ -55,4 +219,10 @@ fun UltimateTestTheme(
         typography = Typography,
         content = content
     )
+}
+
+
+@Composable
+fun font(name: String, res: Int, weight: FontWeight, style: FontStyle): Font {
+    return Font(res, weight, style)
 }

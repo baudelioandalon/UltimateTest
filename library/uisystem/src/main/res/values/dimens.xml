@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--button sizes-->
+    <dimen name="button_menu">100dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="space_button">3dp</dimen>
+
+
+</resources>

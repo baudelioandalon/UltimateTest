@@ -1,2 +1,5 @@
 /.gradle/config.properties
 /.gradle/
+/library/core/build/
+/buildSrc/build/
+/buildSrc/.gradle/
