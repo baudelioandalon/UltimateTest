@@ -39,7 +39,7 @@ private enum class TypographyEmbedded() {
     ROBOTO, MONTSERRAT
 }
 
-private val DEFAULT_TYPOGRAPHY = TypographyEmbedded.ROBOTO
+private val DEFAULT_TYPOGRAPHY = TypographyEmbedded.MONTSERRAT
 
 private val LightColorScheme = lightColorScheme(
     primary = PrimaryColor,

@@ -3,3 +3,4 @@
 /library/core/build/
 /buildSrc/build/
 /buildSrc/.gradle/
+/.idea/assetWizardSettings.xml

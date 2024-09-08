@@ -3,10 +3,13 @@ package com.boreal.ultimatetest.ui
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.CornerBasedShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -22,13 +25,13 @@ import com.boreal.ultimatetest.ui.theme.BorderColor
 fun ImageFromUrl(
     modifier: Modifier = Modifier,
     size: Dp = 200.dp,
-    rounded: Dp = 30.dp,
+    shape: Shape = CardDefaults.shape,
     image: String,
     contentScale: ContentScale = ContentScale.Crop
 ) {
     Card(
         modifier = modifier.size(size),
-        shape = RoundedCornerShape(rounded),
+        shape = shape,
         border = BorderStroke(1.dp, color = BorderColor)
     ) {
         AsyncImage(
