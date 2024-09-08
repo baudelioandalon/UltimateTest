@@ -3,6 +3,7 @@ package com.boreal.ultimatetest.ui.components
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -10,6 +11,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.font.FontWeight.Companion.Medium
 import androidx.compose.ui.text.font.FontWeight.Companion.Normal
@@ -127,18 +129,27 @@ fun MediumTextBold(
 fun RegularText(
     modifier: Modifier = Modifier,
     text: String,
-    fontSize: TextUnit = 17.sp,
+    fontSize: TextUnit = 15.sp,
     color: Color = Color.Black,
-    textAlign: TextAlign? = null,
-    onClicked: (() -> Unit)? = null
+    letterSpacing: TextUnit = 0.sp,
+    maxLines: Int = Int.MAX_VALUE,
+    lineHeight: TextUnit = 14.sp,
+    textOverflow: TextOverflow = TextOverflow.Clip,
+    style: TextStyle = LocalTextStyle.current,
+    textAlign: TextAlign? = null
 ) {
     Text(
-        modifier = if (onClicked != null) modifier.clickable { onClicked.invoke() } else modifier,
+        modifier = modifier,
         text = text,// ?: stringResource(id = labelId ?: R.string.empty_string),
         fontSize = fontSize,
         color = color,
+        lineHeight = lineHeight,
+        letterSpacing = letterSpacing,
         fontWeight = Normal,
+        maxLines = maxLines,
+        overflow = textOverflow,
         textAlign = textAlign,
+        style = style,
         fontFamily = regularTypo()
     )
 }

@@ -31,8 +31,6 @@ import com.boreal.ultimatetest.ui.components.BoldText
 import com.boreal.ultimatetest.ui.components.LogoBlue
 import com.boreal.ultimatetest.ui.components.OutlinedText
 import com.boreal.ultimatetest.ui.components.PrimaryButton
-import com.boreal.ultimatetest.ui.theme.PrimaryColor
-import com.boreal.ultimatetest.ui.theme.SecondaryColor
 import com.boreal.ultimatetest.ui.theme.mediumTypo
 import com.boreal.ultimatetest.uisystem.R
 
@@ -76,7 +74,7 @@ fun WelcomeViewCompose(navController: NavController? = null) {
                     ), contentDescription = "icon"
                 )
                 OutlinedText(
-                    modifier = Modifier.padding(start = 16.dp, bottom =30.dp),
+                    modifier = Modifier.padding(start = 16.dp, bottom = 30.dp),
                     text = "App",
                     outlineWidth = 10f,
                     fontSize = 135.sp
@@ -138,7 +136,9 @@ fun WelcomeViewCompose(navController: NavController? = null) {
             )
 
             OutlinedText(
-                modifier = Modifier.align(Alignment.CenterHorizontally).padding(end = 160.dp),
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(end = 160.dp),
                 text = "Wubba lubba dub dub",
                 outlineWidth = 6f,
                 fontSize = 55.sp

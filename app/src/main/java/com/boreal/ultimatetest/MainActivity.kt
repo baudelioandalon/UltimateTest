@@ -4,8 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.boreal.ultimatetest.modules.home.presentation.ui.HomeScreen
-import com.boreal.ultimatetest.modules.welcome.presentation.ui.WelcomeViewCompose
+import com.boreal.ultimatetest.modules.main.presentation.ui.MainViewCompose
 import com.boreal.ultimatetest.ui.theme.UltimateTestTheme
 
 class MainActivity : ComponentActivity() {
@@ -14,7 +13,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             UltimateTestTheme {
-                WelcomeViewCompose()
+                MainViewCompose()
             }
         }
     }

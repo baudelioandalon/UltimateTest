@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    kotlin("kapt")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -82,4 +84,7 @@ dependencies {
     implementation(libs.accompanist.pager.indicators)
     implementation(libs.lottie.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
+
+    //Load Image From Url
+    implementation(libs.coil.compose)
 }
