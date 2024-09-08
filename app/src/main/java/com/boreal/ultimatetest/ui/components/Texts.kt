@@ -1,10 +1,15 @@
-package com.boreal.ultimatetest.modules.home.components
+package com.boreal.ultimatetest.ui.components
 
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Paint
+import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.font.FontWeight.Companion.Medium
 import androidx.compose.ui.text.font.FontWeight.Companion.Normal
@@ -12,12 +17,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
+import com.boreal.ultimatetest.ui.theme.GrayLetterSeeAll
+import com.boreal.ultimatetest.ui.theme.PrimaryColor
+import com.boreal.ultimatetest.ui.theme.SecondaryColor
 import com.boreal.ultimatetest.ui.theme.boldTypo
 import com.boreal.ultimatetest.ui.theme.lightTypo
 import com.boreal.ultimatetest.ui.theme.mediumTypo
 import com.boreal.ultimatetest.ui.theme.regularTypo
 import com.boreal.ultimatetest.ui.theme.semiBoldTypo
-import com.boreal.ultimatetest.ui.theme.GrayLetterSeeAll
 
 
 @Composable
@@ -172,4 +179,45 @@ fun SmallText(
         textAlign = textAlign,
         fontFamily = regularTypo()
     )
+}
+
+
+@Composable
+fun OutlinedText(
+    text: String,
+    modifier: Modifier = Modifier,
+    color: Color = PrimaryColor,
+    outlineColor: Color = SecondaryColor,
+    outlineWidth: Float = 4f,
+    fontSize: TextUnit = 15.sp
+) {
+    Box(modifier = modifier) {
+        Canvas(modifier = Modifier) {
+            val paint = Paint().asFrameworkPaint().apply {
+                isAntiAlias = true
+                textSize = fontSize.value
+                style = android.graphics.Paint.Style.STROKE
+                strokeWidth = outlineWidth
+                this.color = outlineColor.toArgb()
+            }
+
+            drawContext.canvas.nativeCanvas.drawText(
+                text,
+                0f,
+                fontSize.value,
+                paint
+            )
+
+            paint.style = android.graphics.Paint.Style.FILL
+            paint.color = color.toArgb()
+
+            drawContext.canvas.nativeCanvas.drawText(
+                text,
+                0f,
+                fontSize.value,
+                paint
+            )
+        }
+    }
+
 }

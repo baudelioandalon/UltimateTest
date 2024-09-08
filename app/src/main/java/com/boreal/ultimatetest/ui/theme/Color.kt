@@ -2,7 +2,7 @@ package com.boreal.ultimatetest.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-internal val md_theme_light_secondary = Color(0xFF00696E)
+internal val SecondaryColor = Color(0xFFBFDE42)
 internal val md_theme_light_onSecondary = Color(0xFFFFFFFF)
 internal val md_theme_light_error = Color(0xFFBA1A1A)
 internal val md_theme_light_onError = Color(0xFFFFFFFF)
@@ -22,7 +22,7 @@ internal val md_theme_dark_onBackground = Color(0xFFFFE264)
 internal val md_theme_dark_surface = Color(0xFF221B00)
 internal val md_theme_dark_onSurface = Color(0xFFFFE264)
 
-internal val PrimaryColor = Color(0xFF2196F3)
+internal val PrimaryColor = Color(0xFF41B4CA)
 internal val PrimaryEndColor = Color(0xFF95C1FB)
 internal val NormalColor = Color(0xFF123474)
 internal val BorderColor = Color(0xFFC4C4C4)
@@ -82,41 +82,3 @@ internal val CategoryBackgroundSelectorTwo = Color(0xFFDAE1F4)
 internal val CategoryBackgroundSelectorThree = Color(0xFFF2DFE6)
 internal val FavoriteUnselectedColor = Color(0xFFFAF6FF)
 internal val FavoriteSelectedColor = Color(0xFFB691FF)
-
-internal val categorySelectorColors = listOf(
-    CategoryBackgroundSelectorOne,
-    CategoryBackgroundSelectorTwo,
-    CategoryBackgroundSelectorThree
-)
-
-internal val startColors = arrayOf(
-    Color(0xFF39add1),  // light blue [0]
-    Color(0xFF3079ab),  // dark blue [1]
-    Color(0xFFc25975),  // mauve [2]
-    Color(0xFFe15258),  // red
-    Color(0xFFf9845b),  // orange
-    Color(0xFF838cc7),  // lavender
-    Color(0xFF7d669e),  // purple
-    Color(0xFF53bbb4),  // aqua
-    Color(0xFF51b46d),  // green
-    Color(0xFFe0ab18),  // mustard
-    Color(0xFF637a91),  // dark gray
-    Color(0xFFf092b0),  // pink
-    Color(0xFFb7c0c7) // light gray
-)
-
-internal val endColors = arrayOf(
-    Color(0xFF3079ab),  //dark blue  [0]
-    Color(0xFF39add1),  // light blue [1]
-    Color(0xFFe0ab18),  // mustard [2]
-    Color(0xFF637a91),  // dark gray
-    Color(0xFFf092b0),  // pink
-    Color(0xFFb7c0c7),  // light gray
-    Color(0xFFc25975),  // mauve
-    Color(0xFF51b46d),  // green
-    Color(0xFFe15258),  // red
-    Color(0xFFf9845b),  // orange
-    Color(0xFF838cc7),  // lavender
-    Color(0xFF7d669e), // purple
-    Color(0xFF53bbb4)
-)

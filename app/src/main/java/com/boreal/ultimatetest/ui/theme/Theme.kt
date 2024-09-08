@@ -44,7 +44,7 @@ private val DEFAULT_TYPOGRAPHY = TypographyEmbedded.ROBOTO
 private val LightColorScheme = lightColorScheme(
     primary = PrimaryColor,
     onPrimary = PrimaryEndColor,
-    secondary = md_theme_light_secondary,
+    secondary = SecondaryColor,
     onSecondary = md_theme_light_onSecondary,
     error = md_theme_light_error,
     onError = md_theme_light_onError,
@@ -197,11 +197,6 @@ fun boldTypo() =
         }
     )
 
-
-internal val LocalThemeIsDark = compositionLocalOf { mutableStateOf(false) }
-
-
-
 @Composable
 fun UltimateTestTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
@@ -211,10 +206,8 @@ fun UltimateTestTheme(
 ) {
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+            if (darkTheme) DarkColorScheme else LightColorScheme
         }
-
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
