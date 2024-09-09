@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     kotlin("kapt")
+    id("com.google.dagger.hilt.android")
+    id("org.jetbrains.kotlin.plugin.serialization")
     id("kotlin-parcelize")
 }
 
@@ -61,6 +63,9 @@ dependencies {
     implementation(project(":library:uisystem"))
     implementation(project(":library:core"))
 
+    //Coroutines
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
 
     //Compose
     implementation(libs.compose.activity)
@@ -85,6 +90,22 @@ dependencies {
     implementation(libs.lottie.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
 
+
+    //Ktor & kotlin Serialization
+    implementation("io.ktor:ktor-client-android:2.3.10")
+    implementation("io.ktor:ktor-client-serialization:2.3.10")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+    implementation("io.ktor:ktor-client-logging-jvm:2.3.10")
+    implementation("io.ktor:ktor-client-content-negotiation:2.3.10")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.10")
+
+    implementation(libs.koin.android)
+
     //Load Image From Url
     implementation(libs.coil.compose)
+
+    //Dagger Hilt
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
+
 }

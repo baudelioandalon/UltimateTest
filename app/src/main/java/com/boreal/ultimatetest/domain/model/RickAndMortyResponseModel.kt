@@ -1,10 +1,7 @@
 package com.boreal.ultimatetest.domain.model
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
-
-@Parcelize
+@kotlinx.serialization.Serializable
 data class RickAndMortyResponseModel(
-    val info: Info,
-    val results: List<CharacterModel>
-) : Parcelable
+    val info: Info? = null,
+    val results: List<CharacterModel>? = null
+)

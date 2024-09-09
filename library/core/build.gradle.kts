@@ -31,8 +31,8 @@ android {
             isJniDebuggable = true
             buildConfigField(
                 type = "String",
-                name = "ENVIRONMENT",
-                "\"test/\""
+                name = "BASE_URL",
+                "\"https://rickandmortyapi.com/\""
             )
 
             proguardFiles(
@@ -44,8 +44,8 @@ android {
             isJniDebuggable = true
             buildConfigField(
                 type = "String",
-                name = "ENVIRONMENT",
-                "\"https://test/\""
+                name = "BASE_URL",
+                "\"https://rickandmortyapi.com/\""
             )
 
             proguardFiles(

@@ -1,10 +1,7 @@
 package com.boreal.ultimatetest.domain.model
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
 
-
-@Parcelize
+@kotlinx.serialization.Serializable
 data class CharacterModel(
     val created: String="",
     val episode: List<String> = emptyList(),
@@ -18,4 +15,4 @@ data class CharacterModel(
     val status: String = "",
     val type: String = "",
     val url: String = ""
-): Parcelable
+)

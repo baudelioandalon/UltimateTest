@@ -1,10 +1,7 @@
 package com.boreal.ultimatetest.domain.model
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
-
-@Parcelize
+@kotlinx.serialization.Serializable
 data class Origin(
     val name: String = "",
     val url: String = ""
-) : Parcelable
+)

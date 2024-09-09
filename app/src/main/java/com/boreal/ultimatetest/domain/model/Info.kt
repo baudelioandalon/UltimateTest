@@ -1,12 +1,9 @@
 package com.boreal.ultimatetest.domain.model
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
-
-@Parcelize
+@kotlinx.serialization.Serializable
 data class Info(
     val count: Int,
-    val next: String,
+    val next: String?,
     val pages: Int,
-    val prev: String
-): Parcelable
+    val prev: String?
+)

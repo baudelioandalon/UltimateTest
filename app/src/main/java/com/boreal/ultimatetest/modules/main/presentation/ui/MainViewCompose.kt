@@ -14,11 +14,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.boreal.ultimatetest.domain.NavigationScreen
+import com.boreal.ultimatetest.modules.home.domain.viewmodel.HomeViewModel
 import com.boreal.ultimatetest.modules.home.presentation.ui.HomeViewCompose
 import com.boreal.ultimatetest.modules.welcome.presentation.ui.WelcomeViewCompose
 import com.boreal.ultimatetest.ui.components.bottomnavigation.CustomBottomNavigation
@@ -39,6 +41,7 @@ fun MainViewCompose() {
         }
     }
 
+    val homeViewModel: HomeViewModel = hiltViewModel()
     androidx.compose.material.Scaffold(modifier = Modifier
         .fillMaxWidth(),
         drawerGesturesEnabled = scaffoldState.drawerState.isOpen,
@@ -59,6 +62,7 @@ fun MainViewCompose() {
                 navController = navController,
                 startDestination = NavigationScreen.HomeScreen.route
             ) {
+
                 composable(route = NavigationScreen.WelcomeScreen.route) {
                     WelcomeViewCompose(
                         navController = navController
@@ -66,7 +70,8 @@ fun MainViewCompose() {
                 }
                 composable(route = NavigationScreen.HomeScreen.route) {
                     HomeViewCompose(
-                        navController = navController
+                        navController = navController,
+                        homeViewModel = homeViewModel
                     )
                 }
                 composable(route = NavigationScreen.LocationsScreen.route) {
