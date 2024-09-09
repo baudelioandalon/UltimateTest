@@ -36,8 +36,7 @@ fun CustomBottomNavigation(
 ) {
     val items = listOf(
         NavigationScreen.HomeScreen,
-        NavigationScreen.LocationsScreen,
-        NavigationScreen.EpisodesScreen
+        NavigationScreen.LocationsScreen
     )
 
     Card(elevation = 5.dp) {
