@@ -74,6 +74,10 @@ de forma horizontal se muestra una lista de los habitantes y un pequeño contado
 
 ![result](https://github.com/user-attachments/assets/d3f820ab-2430-4ce6-9e8b-f59cec89516c)
 
+* Adobe XD
+![image](https://github.com/user-attachments/assets/a979b09d-34a4-4c99-8eca-7e1e11dea836)
+
+
 * Screenshots
 
 ![welcome](https://github.com/user-attachments/assets/56165dbd-8631-4002-b18c-d8f85c67cd74)
