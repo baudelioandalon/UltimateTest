@@ -92,8 +92,7 @@ fun WelcomeViewCompose(navController: NavController? = null) {
                     )
                 ) {
                     append(
-                        "En la siguiente pantalla se comenzará a usar las\n" +
-                                "peticiones al servidor "
+                        "En la siguiente pantalla se comenzará a usar las peticiones al servidor "
                     )
                 }
                 // We attach this *termsClick* annotation to the following content
