@@ -1,6 +1,7 @@
 package com.boreal.ultimatetest.modules.home.domain.viewmodel
 
 import com.boreal.ultimatetest.core.domain.EmptyIn
+import com.boreal.ultimatetest.core.domain.UseCase
 import com.boreal.ultimatetest.core.domain.base.BaseViewModel
 import com.boreal.ultimatetest.core.domain.network.ApiResponse
 import com.boreal.ultimatetest.core.domain.network.StateApi
@@ -25,6 +26,11 @@ class HomeViewModel @Inject constructor(
         MutableStateFlow<ApiResponse<RickAndMortyResponseModel>?>(null)
     val characterList = _characterList.asStateFlow()
 
+    /**
+     * @see Obtener la lista de personajes
+     * @param Sin parametros de entrada
+     * @return ApiResponse<RickAndMortyResponseModel>
+     */
     fun getList() {
         executeFlow {
             if (_characterList.value?.status == StateApi.Loading || _characterList.value?.status == StateApi.Success) return@executeFlow
@@ -38,7 +44,6 @@ class HomeViewModel @Inject constructor(
                     error(cause.message ?: "Error")
                 }
             }.collect { result ->
-
                 result.response.success { response ->
                     _characterList.update {
                         response
@@ -52,5 +57,7 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
+
+
 
 }

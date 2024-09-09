@@ -2,6 +2,10 @@ package com.boreal.ultimatetest.core.domain
 
 import kotlinx.coroutines.flow.Flow
 
+/**
+ *
+ * @see UseCase interface for common use cases
+ */
 interface UseCase<in I : In, out O> {
     suspend fun execute(input: I): Flow<O>
 }

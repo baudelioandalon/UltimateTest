@@ -32,7 +32,6 @@ object ApiModule {
             install(DefaultRequest){
                 url(BuildConfig.BASE_URL)
                 header(HttpHeaders.ContentType, ContentType.Application.Json)
-//                header("X-Api-Key", BuildConfig.API_KEY)
             }
             install(ContentNegotiation){
                 json(Json)

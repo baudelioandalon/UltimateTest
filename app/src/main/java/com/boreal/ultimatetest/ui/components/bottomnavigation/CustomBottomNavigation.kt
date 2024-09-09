@@ -85,7 +85,7 @@ fun CustomBottomNavigationItem(item: NavigationScreen, isSelected: Boolean, onCl
             horizontalArrangement = Arrangement.spacedBy(4.dp)
         ) {
 
-            if (item.title.isEmpty()) {
+            if (item.title.isEmpty() && isSelected) {
                 Image(painter = painterResource(id = item.icon), contentDescription = null)
             } else {
                 Icon(

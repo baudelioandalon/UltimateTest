@@ -13,6 +13,8 @@ import dagger.hilt.components.SingletonComponent
 class UseCaseModule {
 
     @Provides
-    fun provideGetListUseCase(rickAndMortyRepository: RickAndMortyRepository) = GetListUseCase(rickAndMortyRepository)
+    fun provideGetListUseCase(rickAndMortyRepository: RickAndMortyRepository) =
+        GetListUseCase(rickAndMortyRepository)
+
 
 }

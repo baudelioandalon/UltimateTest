@@ -1,5 +1,9 @@
 package com.boreal.ultimatetest.core.domain.network
 
+/**
+ * @author Baudelio
+ * @see Sealed class to manage the state of the API
+ */
 sealed class StateApi {
     data object Loading : StateApi()
     data object Success : StateApi()

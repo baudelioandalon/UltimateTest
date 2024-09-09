@@ -37,11 +37,12 @@ fun MainViewCompose() {
 
     LaunchedEffect(currentBackStackEntry) {
         currentBackStackEntry?.destination?.route?.let { route ->
-           showBottomBar = route != NavigationScreen.WelcomeScreen.route
+            showBottomBar = route != NavigationScreen.WelcomeScreen.route
         }
     }
 
     val homeViewModel: HomeViewModel = hiltViewModel()
+
     androidx.compose.material.Scaffold(modifier = Modifier
         .fillMaxWidth(),
         drawerGesturesEnabled = scaffoldState.drawerState.isOpen,
@@ -50,7 +51,13 @@ fun MainViewCompose() {
             if (showBottomBar) {
                 CustomBottomNavigation(currentScreenId = currentScreen.value.route) {
                     currentScreen.value = it
-                    navController.navigate(it.route)
+                    val listNavigation =
+                        navController?.backQueue?.map { it.destination.route } ?: emptyList()
+                    if (it.route != currentScreen.value.route) {
+                        navController.navigate(it.route)
+                    } else if (listNavigation.contains(it.route)) {
+                        navController.popBackStack(it.route, false)
+                    }
                 }
             } else {
                 Spacer(modifier = Modifier.padding(0.dp))
