@@ -14,6 +14,7 @@ import com.boreal.ultimatetest.domain.model.RickAndMortyResponseModel
 import com.boreal.ultimatetest.modules.home.domain.use_cases.GetListUseCase
 import com.boreal.ultimatetest.modules.home.domain.use_cases.GetMoreCharactersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -69,6 +70,9 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    /**
+     * @see Obtener más personajes de las paginas siguientes
+     */
     fun getMore() {
         if (_characterList.value?.status == StateApi.Success && _characterList.value?.response?.info?.next.isNullOrEmpty()) {
             "No hay más personajes".log("MAX_RESULTS")
@@ -104,9 +108,13 @@ class HomeViewModel @Inject constructor(
                 }
                 result.response.error { error ->
                     _characterList.update {
-                        error
+                        with(_characterList.value){
+                            this?.status = StateApi.Success
+                            this
+                        }
                     }
-                    _uiStateCharacterList.value = UiState.Error(error.failure ?: "Error")
+                    "Algo salio mal ${error.failure}".log("ERROR")
+                    _uiStateCharacterList.value = UiState.Success(_characterList.value?.response)
                 }
             }
         }
