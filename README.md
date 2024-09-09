@@ -21,6 +21,8 @@ Ejemplo de uso de herramientas de Android
   Coil
   Coroutines
 
+* Clean Architecture
+
 * Instrucciones
   Abrir el proyecto en la rama dev o main, y bajar todos los cambios, tener a la mano un dispositivo Android 10 o superior con INTERNET.
   de no tener internet solo se mostrará en el LOG la información del error, en caso de NO INTERNET y volverlo a conectar el internet y navegar entre pantallas se
