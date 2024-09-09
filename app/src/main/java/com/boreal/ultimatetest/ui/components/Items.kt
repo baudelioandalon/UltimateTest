@@ -143,6 +143,7 @@ fun ResultLocationItem(
     modifier: Modifier = Modifier,
     name: String = EMPTY_STRING,
     residents: List<String> = listOf("https://rickandmortyapi.com/api/character/avatar/1.jpeg"),
+    secondText: String = "habitantes",
     clicked: (() -> Unit)? = null
 ) {
     Card(
@@ -168,7 +169,7 @@ fun ResultLocationItem(
                     fontSize = 15.sp
                 )
                 SemiBoldText(
-                    text = "${residents.size} habitantes",
+                    text = "${residents.size} $secondText",
                     fontSize = 12.sp,
                     color = PrimaryColor
                 )

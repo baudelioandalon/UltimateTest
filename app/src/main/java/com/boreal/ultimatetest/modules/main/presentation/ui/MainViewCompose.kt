@@ -20,6 +20,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.boreal.ultimatetest.domain.NavigationScreen
+import com.boreal.ultimatetest.modules.episodes.domain.viewmodel.EpisodesViewModel
+import com.boreal.ultimatetest.modules.episodes.presentation.ui.EpisodesViewCompose
 import com.boreal.ultimatetest.modules.home.domain.viewmodel.HomeViewModel
 import com.boreal.ultimatetest.modules.home.presentation.ui.HomeViewCompose
 import com.boreal.ultimatetest.modules.locations.domain.viewmodel.LocationsViewModel
@@ -45,6 +47,7 @@ fun MainViewCompose() {
 
     val homeViewModel: HomeViewModel = hiltViewModel()
     val locationsViewModel: LocationsViewModel = hiltViewModel()
+    val episodesViewModel: EpisodesViewModel = hiltViewModel()
 
     androidx.compose.material.Scaffold(modifier = Modifier
         .fillMaxWidth(),
@@ -92,6 +95,10 @@ fun MainViewCompose() {
                     )
                 }
                 composable(route = NavigationScreen.EpisodesScreen.route) {
+                    EpisodesViewCompose(
+                        navController = navController,
+                        episodesViewModel = episodesViewModel
+                    )
                 }
             }
         })

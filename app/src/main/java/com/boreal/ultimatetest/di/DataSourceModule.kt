@@ -1,5 +1,7 @@
 package com.boreal.ultimatetest.di
 
+import com.boreal.ultimatetest.modules.episodes.data.data_source.RemoteGetListEpisodesDataSource
+import com.boreal.ultimatetest.modules.episodes.data.get_episodes.GetListEpisodesDataSource
 import com.boreal.ultimatetest.modules.home.data.data_source.RemoteGetListCharactersDataSource
 import com.boreal.ultimatetest.modules.home.data.get_characteres.GetListCharactersDataSource
 import com.boreal.ultimatetest.modules.locations.data.data_source.RemoteGetListLocationsDataSource
@@ -20,5 +22,9 @@ object DataSourceModule {
     @Provides
     fun provideRemoteGetListLocationsDataSource(remoteGetListLocationsDataSource: RemoteGetListLocationsDataSource): GetListLocationsDataSource =
         remoteGetListLocationsDataSource
+
+    @Provides
+    fun provideRemoteGetListEpisodesDataSource(remoteGetListEpisodesDataSource: RemoteGetListEpisodesDataSource): GetListEpisodesDataSource =
+        remoteGetListEpisodesDataSource
 
 }

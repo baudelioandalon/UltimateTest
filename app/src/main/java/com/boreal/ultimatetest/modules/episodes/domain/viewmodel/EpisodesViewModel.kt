@@ -1,4 +1,4 @@
-package com.boreal.ultimatetest.modules.locations.domain.viewmodel
+package com.boreal.ultimatetest.modules.episodes.domain.viewmodel
 
 import com.boreal.ultimatetest.core.domain.EmptyIn
 import com.boreal.ultimatetest.core.domain.base.BaseViewModel
@@ -10,7 +10,10 @@ import com.boreal.ultimatetest.core.domain.network.error
 import com.boreal.ultimatetest.core.domain.network.loading
 import com.boreal.ultimatetest.core.domain.network.success
 import com.boreal.ultimatetest.domain.model.characters.RickAndMortyResponseModel
+import com.boreal.ultimatetest.domain.model.episodes.EpisodesResponseModel
 import com.boreal.ultimatetest.domain.model.locations.LocationsResponseModel
+import com.boreal.ultimatetest.modules.episodes.domain.use_cases.GetListEpisodesUseCase
+import com.boreal.ultimatetest.modules.episodes.domain.use_cases.GetMoreEpisodesUseCase
 import com.boreal.ultimatetest.modules.home.domain.use_cases.GetListCharactersUseCase
 import com.boreal.ultimatetest.modules.home.domain.use_cases.GetMoreCharactersUseCase
 import com.boreal.ultimatetest.modules.locations.domain.use_cases.GetListLocationsUseCase
@@ -24,101 +27,101 @@ import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
-class LocationsViewModel @Inject constructor(
-    private val getListLocationsUseCase: GetListLocationsUseCase,
-    private val getMoreLocationsUseCase: GetMoreLocationsUseCase
+class EpisodesViewModel @Inject constructor(
+    private val getListEpisodesUseCase: GetListEpisodesUseCase,
+    private val getMoreEpisodesUseCase: GetMoreEpisodesUseCase
 ) : BaseViewModel() {
 
 
-    private val _locationsList = MutableStateFlow<ApiResponse<LocationsResponseModel>?>(null)
-    private val _uiStateLocationsList = MutableStateFlow<UiState<LocationsResponseModel?>>(UiState.None)
-    val uiStateLocationsList: StateFlow<UiState<LocationsResponseModel?>> = _uiStateLocationsList
+    private val _episodesList = MutableStateFlow<ApiResponse<EpisodesResponseModel>?>(null)
+    private val _uiStateEpisodesList = MutableStateFlow<UiState<EpisodesResponseModel?>>(UiState.None)
+    val uiStateEpisodesList: StateFlow<UiState<EpisodesResponseModel?>> = _uiStateEpisodesList
 
 
     /**
-     * @see Obtener la lista de personajes
+     * @see Obtener la lista de episodios
      * @param Sin parametros de entrada
-     * @return ApiResponse<RickAndMortyResponseModel>
+     * @return ApiResponse<EpisodesResponseModel>
      */
-    fun getLocationsList() {
+    fun getEpisodesList() {
         executeFlow {
-            if (_locationsList.value?.status == StateApi.Loading || _locationsList.value?.status == StateApi.Success) return@executeFlow
-            _locationsList.update {
+            if (_episodesList.value?.status == StateApi.Loading || _episodesList.value?.status == StateApi.Success) return@executeFlow
+            _episodesList.update {
                 loading()
             }
-            _uiStateLocationsList.value = UiState.Loading
-            getListLocationsUseCase.execute(
+            _uiStateEpisodesList.value = UiState.Loading
+            getListEpisodesUseCase.execute(
                 EmptyIn
             ).catch { cause ->
-                _locationsList.update {
+                _episodesList.update {
                     error(cause.message ?: "Error")
                 }
-                _uiStateLocationsList.value = UiState.Error(cause.message ?: "Error")
+                _uiStateEpisodesList.value = UiState.Error(cause.message ?: "Error")
             }.collect { result ->
                 result.response.success { response ->
-                    _locationsList.update {
+                    _episodesList.update {
                         response
                     }
-                    _uiStateLocationsList.value = UiState.Success(response.response)
+                    _uiStateEpisodesList.value = UiState.Success(response.response)
                 }
                 result.response.error { error ->
-                    _locationsList.update {
+                    _episodesList.update {
                         error
                     }
-                    _uiStateLocationsList.value = UiState.Error(error.failure ?: "Error")
+                    _uiStateEpisodesList.value = UiState.Error(error.failure ?: "Error")
                 }
             }
         }
     }
 
     /**
-     * @see Obtener más personajes de las paginas siguientes
+     * @see Obtener más episodios de las paginas siguientes
      */
-    fun getMoreLocations() {
+    fun getMoreEpisodes() {
 
-        if (_locationsList.value?.status == StateApi.Success && _locationsList.value?.response?.info?.next.isNullOrEmpty()) {
-            "No hay más ubicaciónes".log("MAX_RESULTS")
+        if (_episodesList.value?.status == StateApi.Success && _episodesList.value?.response?.info?.next.isNullOrEmpty()) {
+            "No hay más episodios".log("MAX_RESULTS")
             return
         }
         executeFlow {
             delay(500)
-            if (_locationsList.value?.status == StateApi.Loading ) return@executeFlow
-            _locationsList.update {
+            if (_episodesList.value?.status == StateApi.Loading ) return@executeFlow
+            _episodesList.update {
                 loading(
-                    savedBundle = _locationsList.value?.response
+                    savedBundle = _episodesList.value?.response
                 )
             }
-            _uiStateLocationsList.value = UiState.Loading
-            getMoreLocationsUseCase.execute(
-                GetMoreLocationsUseCase.Input(
-                    request = _locationsList.value?.response?.info?.next?.split("=")?.last()?.toIntOrNull() ?: 1
+            _uiStateEpisodesList.value = UiState.Loading
+            getMoreEpisodesUseCase.execute(
+                GetMoreEpisodesUseCase.Input(
+                    request = _episodesList.value?.response?.info?.next?.split("=")?.last()?.toIntOrNull() ?: 1
                 )
             ).catch { cause ->
-                _locationsList.update {
+                _episodesList.update {
                     error(cause.message ?: "Error")
                 }
-                _uiStateLocationsList.value = UiState.Error(cause.message ?: "Error")
+                _uiStateEpisodesList.value = UiState.Error(cause.message ?: "Error")
             }.collect { result ->
 
                 result.response.success { response ->
-                    _locationsList.update {
+                    _episodesList.update {
                         with(response) {
-                            response.response?.results = (_locationsList.value?.response?.results
+                            response.response?.results = (_episodesList.value?.response?.results
                                 ?: emptyList()) + (response.response?.results ?: emptyList())
                             response
                         }
                     }
-                    _uiStateLocationsList.value = UiState.Success(response.response)
+                    _uiStateEpisodesList.value = UiState.Success(response.response)
                 }
                 result.response.error { error ->
-                    _locationsList.update {
-                        with(_locationsList.value){
+                    _episodesList.update {
+                        with(_episodesList.value){
                             this?.status = StateApi.Success
                             this
                         }
                     }
                     "Algo salio mal ${error.failure}".log("ERROR")
-                    _uiStateLocationsList.value = UiState.Success(_locationsList.value?.response)
+                    _uiStateEpisodesList.value = UiState.Success(_episodesList.value?.response)
                 }
             }
         }

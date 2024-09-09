@@ -1,5 +1,8 @@
 package com.boreal.ultimatetest.di
 
+import com.boreal.ultimatetest.modules.episodes.domain.interfaces.EpisodesRepository
+import com.boreal.ultimatetest.modules.episodes.domain.use_cases.GetListEpisodesUseCase
+import com.boreal.ultimatetest.modules.episodes.domain.use_cases.GetMoreEpisodesUseCase
 import com.boreal.ultimatetest.modules.home.domain.interfaces.CharactersRepository
 import com.boreal.ultimatetest.modules.home.domain.use_cases.GetListCharactersUseCase
 import com.boreal.ultimatetest.modules.home.domain.use_cases.GetMoreCharactersUseCase
@@ -33,5 +36,12 @@ class UseCaseModule {
     fun provideGetMoreLocationsUseCase(locationsRepository: LocationsRepository) =
         GetMoreLocationsUseCase(locationsRepository)
 
+    @Provides
+    fun provideGetListEpisodesUseCase(episodesRepository: EpisodesRepository) =
+        GetListEpisodesUseCase(episodesRepository)
+
+    @Provides
+    fun provideGetMoreEpisodesUseCase(episodesRepository: EpisodesRepository) =
+        GetMoreEpisodesUseCase(episodesRepository)
 
 }
