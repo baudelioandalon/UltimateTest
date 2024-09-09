@@ -55,12 +55,13 @@ fun MainViewCompose() {
                 CustomBottomNavigation(currentScreenId = currentScreen.value.route) {
                     val listNavigation =
                         navController.backQueue.map { it.destination.route }
-                    if (it.route != currentScreen.value.route) {
+                    if (it.route != currentScreen.value.route && !listNavigation.contains(it.route)) {
+                        currentScreen.value = it
                         navController.navigate(it.route)
-                    } else if (listNavigation.contains(it.route)) {
+                    } else if (it.route != currentScreen.value.route && listNavigation.contains(it.route)) {
+                        currentScreen.value = it
                         navController.popBackStack(it.route, false)
                     }
-                    currentScreen.value = it
                 }
             } else {
                 Spacer(modifier = Modifier.padding(0.dp))
