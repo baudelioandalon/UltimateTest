@@ -1,8 +1,11 @@
 package com.boreal.ultimatetest.di
 
-import com.boreal.ultimatetest.modules.home.domain.interfaces.RickAndMortyRepository
-import com.boreal.ultimatetest.modules.home.domain.use_cases.GetListUseCase
+import com.boreal.ultimatetest.modules.home.domain.interfaces.CharactersRepository
+import com.boreal.ultimatetest.modules.home.domain.use_cases.GetListCharactersUseCase
 import com.boreal.ultimatetest.modules.home.domain.use_cases.GetMoreCharactersUseCase
+import com.boreal.ultimatetest.modules.locations.domain.interfaces.LocationsRepository
+import com.boreal.ultimatetest.modules.locations.domain.use_cases.GetListLocationsUseCase
+import com.boreal.ultimatetest.modules.locations.domain.use_cases.GetMoreLocationsUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,12 +17,21 @@ import dagger.hilt.components.SingletonComponent
 class UseCaseModule {
 
     @Provides
-    fun provideGetListUseCase(rickAndMortyRepository: RickAndMortyRepository) =
-        GetListUseCase(rickAndMortyRepository)
+    fun provideGetListCharactersUseCase(charactersRepository: CharactersRepository) =
+        GetListCharactersUseCase(charactersRepository)
+
 
     @Provides
-    fun provideGetMoreCharactersListUseCase(rickAndMortyRepository: RickAndMortyRepository) =
-        GetMoreCharactersUseCase(rickAndMortyRepository)
+    fun provideGetMoreCharactersUseCase(charactersRepository: CharactersRepository) =
+        GetMoreCharactersUseCase(charactersRepository)
+
+    @Provides
+    fun provideGetListLocationsUseCase(locationsRepository: LocationsRepository) =
+        GetListLocationsUseCase(locationsRepository)
+
+    @Provides
+    fun provideGetMoreLocationsUseCase(locationsRepository: LocationsRepository) =
+        GetMoreLocationsUseCase(locationsRepository)
 
 
 }

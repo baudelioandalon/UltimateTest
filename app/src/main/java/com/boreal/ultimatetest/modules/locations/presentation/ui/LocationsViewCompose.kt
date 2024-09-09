@@ -1,4 +1,4 @@
-package com.boreal.ultimatetest.modules.home.presentation.ui
+package com.boreal.ultimatetest.modules.locations.presentation.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
@@ -6,10 +6,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.itemsIndexed
-import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
@@ -25,35 +24,34 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.boreal.ultimatetest.core.BuildConfig
 import com.boreal.ultimatetest.core.domain.base.UiState
 import com.boreal.ultimatetest.core.domain.base.reachedBottom
-import com.boreal.ultimatetest.domain.model.characters.CharacterStatus
-import com.boreal.ultimatetest.modules.home.domain.viewmodel.HomeViewModel
-import com.boreal.ultimatetest.ui.components.ResultCharacterItem
-import com.boreal.ultimatetest.ui.theme.ErrorColor
-import com.boreal.ultimatetest.ui.theme.GreenStrong
+import com.boreal.ultimatetest.domain.model.characters.Endpoints
+import com.boreal.ultimatetest.modules.locations.domain.viewmodel.LocationsViewModel
+import com.boreal.ultimatetest.ui.components.ResultLocationItem
 import com.boreal.ultimatetest.ui.theme.PrimaryColor
 
 
 @Preview(showBackground = true)
 @Composable
-fun HomeViewCompose(
+fun LocationViewCompose(
     navController: NavController? = null,
-    homeViewModel: HomeViewModel? = hiltViewModel()
+    locationsViewModel: LocationsViewModel? = hiltViewModel()
 ) {
 
-    val listResult = homeViewModel?.uiStateCharacterList?.collectAsStateWithLifecycle()?.value
-    val listState = rememberLazyGridState()
+    val listResult = locationsViewModel?.uiStateLocationsList?.collectAsStateWithLifecycle()?.value
+    val listState = rememberLazyListState()
 
     LaunchedEffect(Unit) {
-        homeViewModel?.getList()
+        locationsViewModel?.getLocationsList()
     }
 
     val reachedBottom: Boolean by remember { derivedStateOf { listState.reachedBottom() } }
 
     // load more if scrolled to bottom
     LaunchedEffect(reachedBottom) {
-        if (reachedBottom) homeViewModel?.getMore()
+        if (reachedBottom) locationsViewModel?.getMoreLocations()
     }
 
     Scaffold(topBar = {
@@ -70,12 +68,11 @@ fun HomeViewCompose(
                 }
             }
         } else {
-            LazyVerticalGrid(
+            LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(it)
                     .background(White),
-                columns = GridCells.Fixed(2),
                 state = listState
             ) {
                 itemsIndexed(
@@ -90,29 +87,14 @@ fun HomeViewCompose(
                     },
                     key = { _, item -> item.id }
                 ) { index, item ->
-
-                    ResultCharacterItem(
+                    ResultLocationItem(
                         modifier = Modifier.padding(
-                            start = if (index % 2 == 0) 30.dp else 10.dp,
-                            end = if (index % 2 == 0) 10.dp else 30.dp,
-                            top = if (index % 2 != 0) 20.dp else 0.dp
+                            vertical = 20.dp
                         ),
-                        model = item,
+                        name = item.name,
+                        residents = item.residents?.map { "${BuildConfig.BASE_URL}${Endpoints.GET_AVATAR.url}${it.split("/").last()}.jpeg" } ?: emptyList(),
                         clicked = {
 
-                        },
-                        statusColor = when (item.status.uppercase()) {
-                            CharacterStatus.ALIVE.name -> {
-                                GreenStrong
-                            }
-
-                            CharacterStatus.DEAD.name -> {
-                                ErrorColor
-                            }
-
-                            else -> {
-                                PrimaryColor
-                            }
                         }
                     )
 

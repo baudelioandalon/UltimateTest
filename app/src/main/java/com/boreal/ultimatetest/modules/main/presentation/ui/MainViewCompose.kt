@@ -22,6 +22,8 @@ import androidx.navigation.compose.rememberNavController
 import com.boreal.ultimatetest.domain.NavigationScreen
 import com.boreal.ultimatetest.modules.home.domain.viewmodel.HomeViewModel
 import com.boreal.ultimatetest.modules.home.presentation.ui.HomeViewCompose
+import com.boreal.ultimatetest.modules.locations.domain.viewmodel.LocationsViewModel
+import com.boreal.ultimatetest.modules.locations.presentation.ui.LocationViewCompose
 import com.boreal.ultimatetest.modules.welcome.presentation.ui.WelcomeViewCompose
 import com.boreal.ultimatetest.ui.components.bottomnavigation.CustomBottomNavigation
 
@@ -42,6 +44,7 @@ fun MainViewCompose() {
     }
 
     val homeViewModel: HomeViewModel = hiltViewModel()
+    val locationsViewModel: LocationsViewModel = hiltViewModel()
 
     androidx.compose.material.Scaffold(modifier = Modifier
         .fillMaxWidth(),
@@ -50,7 +53,6 @@ fun MainViewCompose() {
         bottomBar = {
             if (showBottomBar) {
                 CustomBottomNavigation(currentScreenId = currentScreen.value.route) {
-                    currentScreen.value = it
                     val listNavigation =
                         navController.backQueue.map { it.destination.route }
                     if (it.route != currentScreen.value.route) {
@@ -58,6 +60,7 @@ fun MainViewCompose() {
                     } else if (listNavigation.contains(it.route)) {
                         navController.popBackStack(it.route, false)
                     }
+                    currentScreen.value = it
                 }
             } else {
                 Spacer(modifier = Modifier.padding(0.dp))
@@ -82,6 +85,10 @@ fun MainViewCompose() {
                     )
                 }
                 composable(route = NavigationScreen.LocationsScreen.route) {
+                    LocationViewCompose(
+                        navController = navController,
+                        locationsViewModel = locationsViewModel
+                    )
                 }
                 composable(route = NavigationScreen.EpisodesScreen.route) {
                 }

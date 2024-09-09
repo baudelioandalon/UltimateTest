@@ -12,3 +12,5 @@ fun String.log(key: String, error: Boolean = true){
         Log.e(key,this)
     }
 }
+
+fun String.cut(limit: Int = Int.MAX_VALUE) = if (limit > length) this else substring(0, limit)+"..."

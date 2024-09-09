@@ -1,23 +1,24 @@
-package com.boreal.ultimatetest.modules.home.data.data_source.remote
+package com.boreal.ultimatetest.modules.locations.data.data_source.remote
 
 import com.boreal.ultimatetest.core.BuildConfig
 import com.boreal.ultimatetest.core.domain.network.ApiResponse
 import com.boreal.ultimatetest.core.domain.network.StateApi
 import com.boreal.ultimatetest.domain.model.characters.Endpoints
 import com.boreal.ultimatetest.domain.model.characters.RickAndMortyResponseModel
+import com.boreal.ultimatetest.domain.model.locations.LocationsResponseModel
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import javax.inject.Inject
 
-class ExecuteGetCharactersListDataSource @Inject constructor(private val httpClient: HttpClient) {
+class ExecuteGetListLocationsDataSource @Inject constructor(private val httpClient: HttpClient) {
 
     /**
-     * Get the list of characters from the API
-     * @return ApiResponse<RickAndMortyResponseModel>
+     * Get the list of locations from the API
+     * @return ApiResponse<LocationsResponseModel>
      */
-    suspend fun executeGetList(): ApiResponse<RickAndMortyResponseModel> = try {
-        val result = httpClient.get("${BuildConfig.BASE_URL}${Endpoints.GET_CHARACTERS_LIST.url}").body<RickAndMortyResponseModel>()
+    suspend fun executeGetListLocations(): ApiResponse<LocationsResponseModel> = try {
+        val result = httpClient.get("${BuildConfig.BASE_URL}${Endpoints.GET_LOCATIONS_LIST.url}").body<LocationsResponseModel>()
         ApiResponse(
             response = result,
             status = StateApi.Success
@@ -31,11 +32,11 @@ class ExecuteGetCharactersListDataSource @Inject constructor(private val httpCli
 
     /**
      * @param page: Int -> Numero de pagina a obtener
-     * Get more characters from the API
-     * @return ApiResponse<RickAndMortyResponseModel>
+     * Get more locations from the API
+     * @return ApiResponse<LocationsResponseModel>
      */
-    suspend fun executeGetMore(page: Int): ApiResponse<RickAndMortyResponseModel> = try {
-        val result = httpClient.get("${BuildConfig.BASE_URL}${Endpoints.GET_MORE_CHARACTERS.url}$page").body<RickAndMortyResponseModel>()
+    suspend fun executeGetMoreLocations(page: Int): ApiResponse<LocationsResponseModel> = try {
+        val result = httpClient.get("${BuildConfig.BASE_URL}${Endpoints.GET_MORE_LOCATIONS.url}$page").body<LocationsResponseModel>()
         ApiResponse(
             response = result,
             status = StateApi.Success

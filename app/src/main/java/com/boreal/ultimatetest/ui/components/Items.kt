@@ -16,33 +16,37 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.boreal.ultimatetest.domain.model.CharacterModel
-import com.boreal.ultimatetest.ui.ImageFromUrl
+import com.boreal.ultimatetest.core.domain.EMPTY_STRING
+import com.boreal.ultimatetest.domain.model.characters.CharacterModel
+import com.boreal.ultimatetest.domain.model.characters.Endpoints
 import com.boreal.ultimatetest.ui.theme.GrayBackgroundDrawerDismiss
+import com.boreal.ultimatetest.ui.theme.PrimaryColor
 import com.boreal.ultimatetest.ui.theme.SecondaryColor
 
 @OptIn(ExperimentalMaterialApi::class)
 @Preview(showBackground = true)
 @Composable
-fun ResultItem(
+fun ResultCharacterItem(
     modifier: Modifier = Modifier,
     model: CharacterModel = CharacterModel(
         id = 1,
         name = "Rick",
         status = "Alive",
-        image = "https://rickandmortyapi.com/api/character/avatar/1.jpeg"
+        image = "${Endpoints.GET_AVATAR}1.jpeg"
     ),
     clicked: (() -> Unit)? = null,
     statusColor: Color = Black
@@ -130,4 +134,57 @@ fun ResultItem(
         }
     }
 
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Preview(showBackground = true)
+@Composable
+fun ResultLocationItem(
+    modifier: Modifier = Modifier,
+    name: String = EMPTY_STRING,
+    residents: List<String> = listOf("https://rickandmortyapi.com/api/character/avatar/1.jpeg"),
+    clicked: (() -> Unit)? = null
+) {
+    Card(
+        modifier = modifier
+            .wrapContentHeight()
+            .fillMaxWidth(),
+        onClick = { clicked?.invoke() },
+        elevation = 5.dp,
+        shape = RectangleShape,
+        border = BorderStroke(1.5.dp, color = SecondaryColor),
+        backgroundColor = White,
+    ) {
+        Column {
+            Row(
+                modifier = Modifier
+                    .padding(start = 6.dp, bottom = 10.dp, end = 5.dp, top = 10.dp)
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                SemiBoldText(
+                    text = name,
+                    fontSize = 15.sp
+                )
+                SemiBoldText(
+                    text = "${residents.size} habitantes",
+                    fontSize = 12.sp,
+                    color = PrimaryColor
+                )
+            }
+            /**
+             * Previsualizador de imagenes horizontales
+             */
+            HorizontalImageViewer(
+                modifier = Modifier.padding(vertical = 15.dp),
+                colorSelected = MaterialTheme.colors.primary,
+                itemList = residents,
+                zoomWhenSelected = true,
+                itemClicked = { index, item ->
+
+                }
+            )
+        }
+    }
 }
