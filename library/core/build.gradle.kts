@@ -103,6 +103,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.livedata.ktx)
 
     implementation(libs.glide)
+    implementation(libs.androidx.foundation.android)
     annotationProcessor(libs.glide.compiler)
 
     //Lottie

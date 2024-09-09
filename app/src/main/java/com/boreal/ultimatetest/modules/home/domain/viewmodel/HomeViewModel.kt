@@ -74,12 +74,14 @@ class HomeViewModel @Inject constructor(
      * @see Obtener más personajes de las paginas siguientes
      */
     fun getMore() {
+
         if (_characterList.value?.status == StateApi.Success && _characterList.value?.response?.info?.next.isNullOrEmpty()) {
             "No hay más personajes".log("MAX_RESULTS")
             return
         }
         executeFlow {
-            if (_characterList.value?.status == StateApi.Loading) return@executeFlow
+            delay(500)
+            if (_characterList.value?.status == StateApi.Loading ) return@executeFlow
             _characterList.update {
                 loading(
                     savedBundle = _characterList.value?.response
@@ -96,6 +98,7 @@ class HomeViewModel @Inject constructor(
                 }
                 _uiStateCharacterList.value = UiState.Error(cause.message ?: "Error")
             }.collect { result ->
+
                 result.response.success { response ->
                     _characterList.update {
                         with(response) {

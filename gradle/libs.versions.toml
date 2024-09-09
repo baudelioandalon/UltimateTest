@@ -48,6 +48,7 @@ androidx-arch-lifecycle-extensions = "1.1.1"
 compose-ui = "1.7.0-alpha03"
 compose-activity = "1.8.2"
 compose-view-model = "2.5.1"
+foundationAndroid = "1.7.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -127,6 +128,7 @@ compose-lifecycle-view-model= { module ="androidx.lifecycle:lifecycle-viewmodel-
 compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
 compose-material3-window = { module = "androidx.compose.material3:material3-window-size-class", version.ref = "material3" }
 compose-material3-adaptive-navigation-suite = { module = "androidx.compose.material3:material3-adaptive-navigation-suite", version.ref = "material3AdaptiveNavigationSuite" }
+androidx-foundation-android = { group = "androidx.compose.foundation", name = "foundation-android", version.ref = "foundationAndroid" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

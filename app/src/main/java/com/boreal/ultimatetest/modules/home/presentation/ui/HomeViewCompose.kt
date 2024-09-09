@@ -26,12 +26,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.boreal.ultimatetest.core.domain.base.UiState
+import com.boreal.ultimatetest.core.domain.base.reachedBottom
 import com.boreal.ultimatetest.domain.model.CharacterStatus
 import com.boreal.ultimatetest.modules.home.domain.viewmodel.HomeViewModel
 import com.boreal.ultimatetest.ui.components.ResultItem
 import com.boreal.ultimatetest.ui.theme.ErrorColor
 import com.boreal.ultimatetest.ui.theme.GreenStrong
 import com.boreal.ultimatetest.ui.theme.PrimaryColor
+
 
 @Preview(showBackground = true)
 @Composable
@@ -43,24 +45,15 @@ fun HomeViewCompose(
     val listResult = homeViewModel?.uiStateCharacterList?.collectAsStateWithLifecycle()?.value
     val listState = rememberLazyGridState()
 
-    val isAtBottom by remember {
-        derivedStateOf {
-            val layoutInfo = listState.layoutInfo
-            val visibleItemsInfo = layoutInfo.visibleItemsInfo
-            if (layoutInfo.totalItemsCount == 0) {
-                false
-            } else {
-                val lastVisibleItem = visibleItemsInfo.last()
-                val viewportHeight = layoutInfo.viewportEndOffset + layoutInfo.viewportStartOffset
-
-                (lastVisibleItem.index + 1 == layoutInfo.totalItemsCount &&
-                        lastVisibleItem.offset.y + lastVisibleItem.size.height <= viewportHeight)
-            }
-        }
-    }
-
     LaunchedEffect(Unit) {
         homeViewModel?.getList()
+    }
+
+    val reachedBottom: Boolean by remember { derivedStateOf { listState.reachedBottom() } }
+
+    // load more if scrolled to bottom
+    LaunchedEffect(reachedBottom) {
+        if (reachedBottom) homeViewModel?.getMore()
     }
 
     Scaffold(topBar = {
@@ -127,10 +120,6 @@ fun HomeViewCompose(
             }
         }
 
-
-        if (isAtBottom) {
-            homeViewModel?.getMore()
-        }
     }
 
 }
