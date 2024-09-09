@@ -15,9 +15,11 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.Font
@@ -31,7 +33,9 @@ import androidx.compose.ui.text.font.FontWeight.Companion.Normal
 import androidx.compose.ui.text.font.FontWeight.Companion.SemiBold
 import androidx.compose.ui.text.font.FontWeight.Companion.Thin
 import androidx.compose.ui.unit.dp
+import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.boreal.ultimatetest.uisystem.R
 
 
@@ -200,7 +204,6 @@ fun boldTypo() =
 @Composable
 fun UltimateTestTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
@@ -212,7 +215,6 @@ fun UltimateTestTheme(
         else -> LightColorScheme
     }
     SystemAppearance(darkTheme)
-
     MaterialTheme(
         colorScheme = colorScheme,
         typography = Typography,
@@ -227,12 +229,13 @@ fun SystemAppearance(isDark: Boolean) {
     val systemBarColor = android.graphics.Color.TRANSPARENT
     LaunchedEffect(isDark) {
         val window = (view.context as Activity).window
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+        WindowCompat.setDecorFitsSystemWindows(window, true)
         window.statusBarColor = systemBarColor
-//        window.navigationBarColor = systemBarColor//Esto es para el bottomNavigation
+        window.navigationBarColor = systemBarColor//Esto es para el bottomNavigation
         WindowCompat.getInsetsController(window, window.decorView).apply {
             isAppearanceLightStatusBars = isDark
             isAppearanceLightNavigationBars = isDark
+            systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         }
     }
 }

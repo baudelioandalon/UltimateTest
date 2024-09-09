@@ -52,7 +52,7 @@ fun MainViewCompose() {
                 CustomBottomNavigation(currentScreenId = currentScreen.value.route) {
                     currentScreen.value = it
                     val listNavigation =
-                        navController?.backQueue?.map { it.destination.route } ?: emptyList()
+                        navController.backQueue.map { it.destination.route }
                     if (it.route != currentScreen.value.route) {
                         navController.navigate(it.route)
                     } else if (listNavigation.contains(it.route)) {
@@ -67,7 +67,7 @@ fun MainViewCompose() {
             NavHost(
                 modifier = Modifier.padding(it),
                 navController = navController,
-                startDestination = NavigationScreen.HomeScreen.route
+                startDestination = NavigationScreen.WelcomeScreen.route
             ) {
 
                 composable(route = NavigationScreen.WelcomeScreen.route) {
