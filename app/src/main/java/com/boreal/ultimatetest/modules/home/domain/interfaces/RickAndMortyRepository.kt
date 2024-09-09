@@ -6,4 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface RickAndMortyRepository {
     suspend fun executeGetList(): Flow<ApiResponse<RickAndMortyResponseModel>>
+    suspend fun executeGetMoreCharacters(page: Int): Flow<ApiResponse<RickAndMortyResponseModel>>
 }

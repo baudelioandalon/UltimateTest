@@ -1,7 +1,10 @@
 package com.boreal.ultimatetest.domain.model
 
+import androidx.compose.runtime.Immutable
+
 
 @kotlinx.serialization.Serializable
+@Immutable
 data class CharacterModel(
     val created: String="",
     val episode: List<String> = emptyList(),

@@ -11,4 +11,8 @@ class DefaultRickAndMortyRepository @Inject constructor(private val getListDataS
     override suspend fun executeGetList() = flow {
         emit(getListDataSource.executeGetList())
     }
+
+    override suspend fun executeGetMoreCharacters(page: Int) = flow {
+        emit(getListDataSource.executeGetMore(page))
+    }
 }

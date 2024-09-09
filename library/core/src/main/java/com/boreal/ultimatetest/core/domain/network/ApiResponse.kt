@@ -15,8 +15,9 @@ fun <T> ApiResponse<T>.success(result: (ApiResponse<T>) -> Unit) {
 }
 
 // Extension function to create a loading state
-fun <T> loading() = ApiResponse<T>(
-    status = StateApi.Loading
+fun <T> loading(savedBundle: T? = null) = ApiResponse<T>(
+    status = StateApi.Loading,
+    response = savedBundle
 )
 
 // Extension function to check if the status is error

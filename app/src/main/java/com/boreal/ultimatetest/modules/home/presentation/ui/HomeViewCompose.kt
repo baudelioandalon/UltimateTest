@@ -8,10 +8,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.White
@@ -20,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import com.boreal.ultimatetest.core.domain.network.StateApi
+import com.boreal.ultimatetest.core.domain.base.UiState
 import com.boreal.ultimatetest.modules.home.domain.viewmodel.HomeViewModel
 import com.boreal.ultimatetest.ui.components.ResultItem
 import com.boreal.ultimatetest.ui.theme.ErrorColor
@@ -34,13 +38,30 @@ fun HomeViewCompose(
     homeViewModel: HomeViewModel? = hiltViewModel()
 ) {
 
-    val listResult = homeViewModel?.characterList?.collectAsStateWithLifecycle()?.value
+    val listResult = homeViewModel?.uiStateCharacterList?.collectAsStateWithLifecycle()?.value
+    val listState = rememberLazyGridState()
+
+    val isAtBottom by remember {
+        derivedStateOf {
+            val layoutInfo = listState.layoutInfo
+            val visibleItemsInfo = layoutInfo.visibleItemsInfo
+            if (layoutInfo.totalItemsCount == 0) {
+                false
+            } else {
+                val lastVisibleItem = visibleItemsInfo.last()
+                val viewportHeight = layoutInfo.viewportEndOffset + layoutInfo.viewportStartOffset
+
+                (lastVisibleItem.index + 1 == layoutInfo.totalItemsCount &&
+                        lastVisibleItem.offset.y + lastVisibleItem.size.height <= viewportHeight)
+            }
+        }
+    }
 
     LaunchedEffect(Unit) {
         homeViewModel?.getList()
     }
 
-    AnimatedVisibility(listResult?.status == StateApi.Loading) {
+    AnimatedVisibility(listResult == UiState.Loading) {
         CircularProgressIndicator(modifier = Modifier.size(50.dp), color = Color.Blue)
     }
 
@@ -52,15 +73,19 @@ fun HomeViewCompose(
                 .fillMaxSize()
                 .padding(it)
                 .background(White),
-            columns = GridCells.Fixed(2)
+            columns = GridCells.Fixed(2),
+            state = listState
         ) {
-
             itemsIndexed(
-                items = if (listResult?.status == StateApi.Success) {
-                    listResult.response?.results ?: emptyList()
-                } else {
-                    emptyList()
-                }
+                items = when (listResult) {
+                    is UiState.Success -> {
+                        listResult.data?.results ?: emptyList()
+                    }
+                    else -> {
+                        emptyList()
+                    }
+                },
+                key = { _, item -> item.id }
             ) { index, item ->
                 ResultItem(
                     modifier = Modifier.padding(
@@ -87,6 +112,10 @@ fun HomeViewCompose(
                     }
                 )
             }
+        }
+
+        if (isAtBottom) {
+            homeViewModel?.getMore()
         }
     }
 

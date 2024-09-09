@@ -1,7 +1,10 @@
 package com.boreal.ultimatetest.domain.model
 
+import androidx.compose.runtime.Immutable
+
 @kotlinx.serialization.Serializable
+@Immutable
 data class RickAndMortyResponseModel(
     val info: Info? = null,
-    val results: List<CharacterModel>? = null
+    var results: List<CharacterModel>? = null
 )
