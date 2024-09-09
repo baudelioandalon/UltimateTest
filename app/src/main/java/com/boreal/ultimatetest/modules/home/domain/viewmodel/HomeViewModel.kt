@@ -1,6 +1,5 @@
 package com.boreal.ultimatetest.modules.home.domain.viewmodel
 
-import androidx.compose.runtime.mutableStateOf
 import com.boreal.ultimatetest.core.domain.EmptyIn
 import com.boreal.ultimatetest.core.domain.base.BaseViewModel
 import com.boreal.ultimatetest.core.domain.base.UiState
@@ -10,21 +9,20 @@ import com.boreal.ultimatetest.core.domain.network.StateApi
 import com.boreal.ultimatetest.core.domain.network.error
 import com.boreal.ultimatetest.core.domain.network.loading
 import com.boreal.ultimatetest.core.domain.network.success
-import com.boreal.ultimatetest.domain.model.RickAndMortyResponseModel
-import com.boreal.ultimatetest.modules.home.domain.use_cases.GetListUseCase
+import com.boreal.ultimatetest.domain.model.characters.RickAndMortyResponseModel
+import com.boreal.ultimatetest.modules.home.domain.use_cases.GetListCharactersUseCase
 import com.boreal.ultimatetest.modules.home.domain.use_cases.GetMoreCharactersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getListUseCase: GetListUseCase,
+    private val getListCharactersUseCase: GetListCharactersUseCase,
     private val getMoreCharactersUseCase: GetMoreCharactersUseCase
 ) : BaseViewModel() {
 
@@ -46,7 +44,7 @@ class HomeViewModel @Inject constructor(
                 loading()
             }
             _uiStateCharacterList.value = UiState.Loading
-            getListUseCase.execute(
+            getListCharactersUseCase.execute(
                 EmptyIn
             ).catch { cause ->
                 _characterList.update {

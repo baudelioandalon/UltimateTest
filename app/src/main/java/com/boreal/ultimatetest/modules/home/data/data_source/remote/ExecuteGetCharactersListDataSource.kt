@@ -3,8 +3,8 @@ package com.boreal.ultimatetest.modules.home.data.data_source.remote
 import com.boreal.ultimatetest.core.BuildConfig
 import com.boreal.ultimatetest.core.domain.network.ApiResponse
 import com.boreal.ultimatetest.core.domain.network.StateApi
-import com.boreal.ultimatetest.domain.model.Endpoints
-import com.boreal.ultimatetest.domain.model.RickAndMortyResponseModel
+import com.boreal.ultimatetest.domain.model.characters.Endpoints
+import com.boreal.ultimatetest.domain.model.characters.RickAndMortyResponseModel
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
@@ -17,7 +17,7 @@ class ExecuteGetCharactersListDataSource @Inject constructor(private val httpCli
      * @return ApiResponse<RickAndMortyResponseModel>
      */
     suspend fun executeGetList(): ApiResponse<RickAndMortyResponseModel> = try {
-        val result = httpClient.get("${BuildConfig.BASE_URL}${Endpoints.GET_LIST.url}").body<RickAndMortyResponseModel>()
+        val result = httpClient.get("${BuildConfig.BASE_URL}${Endpoints.GET_CHARACTERS_LIST.url}").body<RickAndMortyResponseModel>()
         ApiResponse(
             response = result,
             status = StateApi.Success
@@ -35,7 +35,7 @@ class ExecuteGetCharactersListDataSource @Inject constructor(private val httpCli
      * @return ApiResponse<RickAndMortyResponseModel>
      */
     suspend fun executeGetMore(page: Int): ApiResponse<RickAndMortyResponseModel> = try {
-        val result = httpClient.get("${BuildConfig.BASE_URL}${Endpoints.GET_MORE.url}$page").body<RickAndMortyResponseModel>()
+        val result = httpClient.get("${BuildConfig.BASE_URL}${Endpoints.GET_MORE_CHARACTERS.url}$page").body<RickAndMortyResponseModel>()
         ApiResponse(
             response = result,
             status = StateApi.Success

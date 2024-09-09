@@ -27,9 +27,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.boreal.ultimatetest.core.domain.base.UiState
 import com.boreal.ultimatetest.core.domain.base.reachedBottom
-import com.boreal.ultimatetest.domain.model.CharacterStatus
+import com.boreal.ultimatetest.domain.model.characters.CharacterStatus
 import com.boreal.ultimatetest.modules.home.domain.viewmodel.HomeViewModel
-import com.boreal.ultimatetest.ui.components.ResultItem
+import com.boreal.ultimatetest.ui.components.ResultCharacterItem
 import com.boreal.ultimatetest.ui.theme.ErrorColor
 import com.boreal.ultimatetest.ui.theme.GreenStrong
 import com.boreal.ultimatetest.ui.theme.PrimaryColor
@@ -91,7 +91,7 @@ fun HomeViewCompose(
                     key = { _, item -> item.id }
                 ) { index, item ->
 
-                    ResultItem(
+                    ResultCharacterItem(
                         modifier = Modifier.padding(
                             start = if (index % 2 == 0) 30.dp else 10.dp,
                             end = if (index % 2 == 0) 10.dp else 30.dp,

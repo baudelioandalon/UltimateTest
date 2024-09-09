@@ -1,7 +1,11 @@
 package com.boreal.ultimatetest.di
 
-import com.boreal.ultimatetest.modules.home.data.data_source.RemoteGetListDataSource
-import com.boreal.ultimatetest.modules.home.data.get_list.GetListDataSource
+import com.boreal.ultimatetest.modules.episodes.data.data_source.RemoteGetListEpisodesDataSource
+import com.boreal.ultimatetest.modules.episodes.data.get_episodes.GetListEpisodesDataSource
+import com.boreal.ultimatetest.modules.home.data.data_source.RemoteGetListCharactersDataSource
+import com.boreal.ultimatetest.modules.home.data.get_characteres.GetListCharactersDataSource
+import com.boreal.ultimatetest.modules.locations.data.data_source.RemoteGetListLocationsDataSource
+import com.boreal.ultimatetest.modules.locations.data.get_locations.GetListLocationsDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,7 +16,15 @@ import dagger.hilt.components.SingletonComponent
 object DataSourceModule {
 
     @Provides
-    fun provideRemoteGetListDataSource(remoteGetListDataSource: RemoteGetListDataSource): GetListDataSource = remoteGetListDataSource
+    fun provideRemoteGetListCharactersDataSource(remoteGetListCharactersDataSource: RemoteGetListCharactersDataSource): GetListCharactersDataSource =
+        remoteGetListCharactersDataSource
 
+    @Provides
+    fun provideRemoteGetListLocationsDataSource(remoteGetListLocationsDataSource: RemoteGetListLocationsDataSource): GetListLocationsDataSource =
+        remoteGetListLocationsDataSource
+
+    @Provides
+    fun provideRemoteGetListEpisodesDataSource(remoteGetListEpisodesDataSource: RemoteGetListEpisodesDataSource): GetListEpisodesDataSource =
+        remoteGetListEpisodesDataSource
 
 }

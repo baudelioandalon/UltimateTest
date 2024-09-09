@@ -20,8 +20,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.boreal.ultimatetest.domain.NavigationScreen
+import com.boreal.ultimatetest.modules.episodes.domain.viewmodel.EpisodesViewModel
+import com.boreal.ultimatetest.modules.episodes.presentation.ui.EpisodesViewCompose
 import com.boreal.ultimatetest.modules.home.domain.viewmodel.HomeViewModel
 import com.boreal.ultimatetest.modules.home.presentation.ui.HomeViewCompose
+import com.boreal.ultimatetest.modules.locations.domain.viewmodel.LocationsViewModel
+import com.boreal.ultimatetest.modules.locations.presentation.ui.LocationViewCompose
 import com.boreal.ultimatetest.modules.welcome.presentation.ui.WelcomeViewCompose
 import com.boreal.ultimatetest.ui.components.bottomnavigation.CustomBottomNavigation
 
@@ -42,6 +46,8 @@ fun MainViewCompose() {
     }
 
     val homeViewModel: HomeViewModel = hiltViewModel()
+    val locationsViewModel: LocationsViewModel = hiltViewModel()
+    val episodesViewModel: EpisodesViewModel = hiltViewModel()
 
     androidx.compose.material.Scaffold(modifier = Modifier
         .fillMaxWidth(),
@@ -50,12 +56,13 @@ fun MainViewCompose() {
         bottomBar = {
             if (showBottomBar) {
                 CustomBottomNavigation(currentScreenId = currentScreen.value.route) {
-                    currentScreen.value = it
                     val listNavigation =
                         navController.backQueue.map { it.destination.route }
-                    if (it.route != currentScreen.value.route) {
+                    if (it.route != currentScreen.value.route && !listNavigation.contains(it.route)) {
+                        currentScreen.value = it
                         navController.navigate(it.route)
-                    } else if (listNavigation.contains(it.route)) {
+                    } else if (it.route != currentScreen.value.route && listNavigation.contains(it.route)) {
+                        currentScreen.value = it
                         navController.popBackStack(it.route, false)
                     }
                 }
@@ -82,8 +89,16 @@ fun MainViewCompose() {
                     )
                 }
                 composable(route = NavigationScreen.LocationsScreen.route) {
+                    LocationViewCompose(
+                        navController = navController,
+                        locationsViewModel = locationsViewModel
+                    )
                 }
                 composable(route = NavigationScreen.EpisodesScreen.route) {
+                    EpisodesViewCompose(
+                        navController = navController,
+                        episodesViewModel = episodesViewModel
+                    )
                 }
             }
         })
