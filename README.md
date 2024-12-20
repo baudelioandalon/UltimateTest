@@ -21,6 +21,8 @@ Ejemplo de uso de herramientas de Android
   Coil
   Coroutines
 
+* Clean Architecture
+
 * Instrucciones
   Abrir el proyecto en la rama dev o main, y bajar todos los cambios, tener a la mano un dispositivo Android 10 o superior con INTERNET.
   de no tener internet solo se mostrará en el LOG la información del error, en caso de NO INTERNET y volverlo a conectar el internet y navegar entre pantallas se
@@ -71,6 +73,10 @@ de forma horizontal se muestra una lista de los habitantes y un pequeño contado
 * Aplicacion
 
 ![result](https://github.com/user-attachments/assets/d3f820ab-2430-4ce6-9e8b-f59cec89516c)
+
+* Adobe XD
+![image](https://github.com/user-attachments/assets/a979b09d-34a4-4c99-8eca-7e1e11dea836)
+
 
 * Screenshots
 
