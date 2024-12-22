@@ -5,45 +5,43 @@ import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.compositionLocalOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
-import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.font.FontWeight.Companion.Bold
-import androidx.compose.ui.text.font.FontWeight.Companion.Light
-import androidx.compose.ui.text.font.FontWeight.Companion.Medium
-import androidx.compose.ui.text.font.FontWeight.Companion.Normal
-import androidx.compose.ui.text.font.FontWeight.Companion.SemiBold
 import androidx.compose.ui.text.font.FontWeight.Companion.Thin
 import androidx.compose.ui.unit.dp
-import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import com.boreal.ultimatetest.core.ui.theme.DEFAULT_TYPOGRAPHY
+import com.boreal.ultimatetest.core.ui.theme.PrimaryColor
+import com.boreal.ultimatetest.core.ui.theme.PrimaryEndColor
+import com.boreal.ultimatetest.core.ui.theme.SecondaryColor
+import com.boreal.ultimatetest.core.ui.theme.TypographyEmbedded
+import com.boreal.ultimatetest.core.ui.theme.font
+import com.boreal.ultimatetest.core.ui.theme.md_theme_dark_background
+import com.boreal.ultimatetest.core.ui.theme.md_theme_dark_error
+import com.boreal.ultimatetest.core.ui.theme.md_theme_dark_onBackground
+import com.boreal.ultimatetest.core.ui.theme.md_theme_dark_onError
+import com.boreal.ultimatetest.core.ui.theme.md_theme_dark_onPrimary
+import com.boreal.ultimatetest.core.ui.theme.md_theme_dark_onSecondary
+import com.boreal.ultimatetest.core.ui.theme.md_theme_dark_onSurface
+import com.boreal.ultimatetest.core.ui.theme.md_theme_dark_primary
+import com.boreal.ultimatetest.core.ui.theme.md_theme_dark_secondary
+import com.boreal.ultimatetest.core.ui.theme.md_theme_dark_surface
+import com.boreal.ultimatetest.core.ui.theme.md_theme_light_background
+import com.boreal.ultimatetest.core.ui.theme.md_theme_light_error
+import com.boreal.ultimatetest.core.ui.theme.md_theme_light_onBackground
+import com.boreal.ultimatetest.core.ui.theme.md_theme_light_onError
+import com.boreal.ultimatetest.core.ui.theme.md_theme_light_onSecondary
+import com.boreal.ultimatetest.core.ui.theme.md_theme_light_onSurface
+import com.boreal.ultimatetest.core.ui.theme.md_theme_light_surface
 import com.boreal.ultimatetest.uisystem.R
 
-
-private enum class TypographyEmbedded() {
-    ROBOTO, MONTSERRAT
-}
-
-private val DEFAULT_TYPOGRAPHY = TypographyEmbedded.MONTSERRAT
 
 private val LightColorScheme = lightColorScheme(
     primary = PrimaryColor,
@@ -97,109 +95,6 @@ fun thinTypo() = FontFamily(
     }
 )
 
-@Composable
-fun lightTypo() = FontFamily(
-    when (DEFAULT_TYPOGRAPHY) {
-        TypographyEmbedded.MONTSERRAT -> font(
-            "Montserrat",
-            R.font.roboto_light,
-            Light,
-            FontStyle.Normal
-        )
-
-        else -> {
-
-            font(
-                "Roboto", R.font.roboto_light, Light, FontStyle.Normal
-            )
-        }
-    }
-)
-
-@Composable
-fun regularTypo() = FontFamily(
-    when (DEFAULT_TYPOGRAPHY) {
-        TypographyEmbedded.MONTSERRAT -> font(
-            "Montserrat",
-            R.font.montserrat_regular,
-            Normal,
-            FontStyle.Normal
-        )
-
-        else -> {
-
-            font(
-                "Roboto", R.font.roboto, Normal, FontStyle.Normal
-            )
-        }
-    }
-)
-
-@Composable
-fun robotoMediumTypo() = FontFamily(
-    font(
-        "Roboto", R.font.roboto, Normal, FontStyle.Normal
-    )
-)
-
-@Composable
-fun mediumTypo() =
-    FontFamily(
-        when (DEFAULT_TYPOGRAPHY) {
-            TypographyEmbedded.MONTSERRAT -> font(
-                "Montserrat",
-                R.font.montserrat_medium,
-                Medium,
-                FontStyle.Normal
-            )
-
-            else -> {
-
-                font(
-                    "Roboto", R.font.roboto, Medium, FontStyle.Normal
-                )
-            }
-        }
-    )
-
-@Composable
-fun semiBoldTypo() = FontFamily(
-    when (DEFAULT_TYPOGRAPHY) {
-        TypographyEmbedded.MONTSERRAT -> font(
-            "Montserrat",
-            R.font.montserrat_semibold,
-            Normal,
-            FontStyle.Normal
-        )
-
-        else -> {
-
-            font(
-                "Roboto", R.font.roboto, SemiBold, FontStyle.Normal
-            )
-        }
-    }
-)
-
-@Composable
-fun boldTypo() =
-    FontFamily(
-        when (DEFAULT_TYPOGRAPHY) {
-            TypographyEmbedded.MONTSERRAT -> font(
-                "Montserrat",
-                R.font.montserrat_bold,
-                Bold,
-                FontStyle.Normal
-            )
-
-            else -> {
-
-                font(
-                    "Roboto", R.font.roboto_bold, Bold, FontStyle.Normal
-                )
-            }
-        }
-    )
 
 @Composable
 fun UltimateTestTheme(
@@ -211,6 +106,7 @@ fun UltimateTestTheme(
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             if (darkTheme) DarkColorScheme else LightColorScheme
         }
+
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
@@ -240,7 +136,3 @@ fun SystemAppearance(isDark: Boolean) {
     }
 }
 
-@Composable
-fun font(name: String, res: Int, weight: FontWeight, style: FontStyle): Font {
-    return Font(res, weight, style)
-}

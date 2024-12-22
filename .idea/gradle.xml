@@ -25,6 +25,8 @@
             <option value="$PROJECT_DIR$/library" />
             <option value="$PROJECT_DIR$/library/core" />
             <option value="$PROJECT_DIR$/library/uisystem" />
+            <option value="$PROJECT_DIR$/modules" />
+            <option value="$PROJECT_DIR$/modules/rickandmorty" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

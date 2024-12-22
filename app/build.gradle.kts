@@ -62,6 +62,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(project(":library:uisystem"))
     implementation(project(":library:core"))
+    implementation(project(":modules:rickandmorty"))
 
     //Coroutines
     implementation(libs.kotlinx.coroutines.core)
@@ -94,7 +95,7 @@ dependencies {
     //Ktor & kotlin Serialization
     implementation("io.ktor:ktor-client-android:2.3.10")
     implementation("io.ktor:ktor-client-serialization:2.3.10")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+    implementation(libs.kotlinx.serialization.json)
     implementation("io.ktor:ktor-client-logging-jvm:2.3.10")
     implementation("io.ktor:ktor-client-content-negotiation:2.3.10")
     implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.10")

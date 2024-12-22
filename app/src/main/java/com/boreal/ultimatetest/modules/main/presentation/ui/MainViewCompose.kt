@@ -19,14 +19,18 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.boreal.ultimatetest.core.ui.theme.ErrorColor
+import com.boreal.ultimatetest.core.ui.theme.GreenStrong
+import com.boreal.ultimatetest.core.ui.theme.PrimaryColor
+import com.boreal.ultimatetest.core.ui.theme.SecondaryColor
 import com.boreal.ultimatetest.domain.NavigationScreen
-import com.boreal.ultimatetest.modules.episodes.domain.viewmodel.EpisodesViewModel
-import com.boreal.ultimatetest.modules.episodes.presentation.ui.EpisodesViewCompose
-import com.boreal.ultimatetest.modules.home.domain.viewmodel.HomeViewModel
-import com.boreal.ultimatetest.modules.home.presentation.ui.HomeViewCompose
-import com.boreal.ultimatetest.modules.locations.domain.viewmodel.LocationsViewModel
-import com.boreal.ultimatetest.modules.locations.presentation.ui.LocationViewCompose
-import com.boreal.ultimatetest.modules.welcome.presentation.ui.WelcomeViewCompose
+import com.boreal.ultimatetest.rickandmorty.modules.episodes.domain.viewmodel.EpisodesViewModel
+import com.boreal.ultimatetest.rickandmorty.modules.episodes.presentation.ui.EpisodesViewCompose
+import com.boreal.ultimatetest.rickandmorty.modules.home.ui.HomeViewCompose
+import com.boreal.ultimatetest.rickandmorty.modules.home.viewmodel.HomeViewModel
+import com.boreal.ultimatetest.rickandmorty.modules.locations.domain.viewmodel.LocationsViewModel
+import com.boreal.ultimatetest.rickandmorty.modules.locations.ui.LocationViewCompose
+import com.boreal.ultimatetest.rickandmorty.modules.welcome.presentation.ui.WelcomeViewCompose
 import com.boreal.ultimatetest.ui.components.bottomnavigation.CustomBottomNavigation
 
 @Preview(showBackground = true)
@@ -79,25 +83,36 @@ fun MainViewCompose() {
 
                 composable(route = NavigationScreen.WelcomeScreen.route) {
                     WelcomeViewCompose(
-                        navController = navController
+                        navController = navController,
+                        toHomeRoute = NavigationScreen.HomeScreen.route,
+                        primaryColor = PrimaryColor,
+                        secondaryColor = SecondaryColor
                     )
                 }
                 composable(route = NavigationScreen.HomeScreen.route) {
                     HomeViewCompose(
                         navController = navController,
-                        homeViewModel = homeViewModel
+                        homeViewModel = homeViewModel,
+                        primaryColor = PrimaryColor,
+                        secondaryColor = SecondaryColor,
+                        aliveColor = GreenStrong,
+                        deadColor = ErrorColor
                     )
                 }
                 composable(route = NavigationScreen.LocationsScreen.route) {
                     LocationViewCompose(
                         navController = navController,
-                        locationsViewModel = locationsViewModel
+                        locationsViewModel = locationsViewModel,
+                        primaryColor = PrimaryColor,
+                        secondaryColor = SecondaryColor
                     )
                 }
                 composable(route = NavigationScreen.EpisodesScreen.route) {
                     EpisodesViewCompose(
                         navController = navController,
-                        episodesViewModel = episodesViewModel
+                        episodesViewModel = episodesViewModel,
+                        primaryColor = PrimaryColor,
+                        secondaryColor = SecondaryColor
                     )
                 }
             }

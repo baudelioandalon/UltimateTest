@@ -23,3 +23,4 @@ rootProject.name = "UltimateTest"
 include(":app")
 include (":library:core")
 include(":library:uisystem")
+include(":modules:rickandmorty")

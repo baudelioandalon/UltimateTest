@@ -24,9 +24,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.boreal.ultimatetest.domain.NavigationScreen
-import com.boreal.ultimatetest.ui.components.BoldText
-import com.boreal.ultimatetest.ui.theme.GrayLetterShipping
-import com.boreal.ultimatetest.ui.theme.PrimaryColor
+import com.boreal.ultimatetest.core.components.BoldText
+import com.boreal.ultimatetest.core.ui.theme.GrayLetterShipping
+import com.boreal.ultimatetest.core.ui.theme.PrimaryColor
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
