@@ -1,4 +1,4 @@
-package com.boreal.ultimatetest.rickandmorty.modules.home.ui
+package com.boreal.ultimatetest.games.modules.home.presentation.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
@@ -14,9 +14,6 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,36 +25,29 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.boreal.ultimatetest.core.domain.base.UiState
-import com.boreal.ultimatetest.core.domain.base.reachedBottom
-import com.boreal.ultimatetest.rickandmorty.components.ResultCharacterItem
-import com.boreal.ultimatetest.rickandmorty.domain.model.CharacterStatus
-import com.boreal.ultimatetest.rickandmorty.modules.home.viewmodel.HomeViewModel
+import com.boreal.ultimatetest.games.components.ResultGameItem
+import com.boreal.ultimatetest.games.modules.home.viewmodel.HomeGamesViewModel
 
 
 @Preview(showBackground = true)
 @Composable
-fun HomeViewCompose(
+fun HomeGamesViewCompose(
     navController: NavController? = null,
-    homeViewModel: HomeViewModel? = hiltViewModel(),
+    homeViewModel: HomeGamesViewModel? = hiltViewModel(),
     primaryColor: Color = Black,
     secondaryColor: Color = Black,
     aliveColor: Color = Black,
     deadColor: Color = Black
 ) {
 
-    val listResult = homeViewModel?.uiStateCharacterList?.collectAsStateWithLifecycle()?.value
+    val listResult = homeViewModel?.uiStateGamesList?.collectAsStateWithLifecycle()?.value
     val listState = rememberLazyGridState()
 
     LaunchedEffect(Unit) {
         homeViewModel?.getList()
     }
 
-    val reachedBottom: Boolean by remember { derivedStateOf { listState.reachedBottom() } }
 
-    // load more if scrolled to bottom
-    LaunchedEffect(reachedBottom) {
-        if (reachedBottom) homeViewModel?.getMore()
-    }
 
     Scaffold(topBar = {
 
@@ -84,17 +74,17 @@ fun HomeViewCompose(
                 itemsIndexed(
                     items = when (listResult) {
                         is UiState.Success -> {
-                            listResult.data?.results ?: emptyList()
+                            listResult.data ?: emptyList()
                         }
 
                         else -> {
                             emptyList()
                         }
                     },
-                    key = { _, item -> item.id }
+                    key = { _, item -> item.id ?: 0 }
                 ) { index, item ->
 
-                    ResultCharacterItem(
+                    ResultGameItem(
                         modifier = Modifier.padding(
                             start = if (index % 2 == 0) 30.dp else 10.dp,
                             end = if (index % 2 == 0) 10.dp else 30.dp,
@@ -103,19 +93,6 @@ fun HomeViewCompose(
                         model = item,
                         clicked = {
 
-                        },
-                        statusColor = when (item.status.uppercase()) {
-                            CharacterStatus.ALIVE.name -> {
-                                aliveColor
-                            }
-
-                            CharacterStatus.DEAD.name -> {
-                                deadColor
-                            }
-
-                            else -> {
-                                primaryColor
-                            }
                         }
                     )
 

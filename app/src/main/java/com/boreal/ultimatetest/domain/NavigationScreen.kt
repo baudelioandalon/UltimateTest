@@ -16,4 +16,7 @@ sealed class NavigationScreen(
     data object HomeScreen : NavigationScreen("home_screen", R.drawable.rick_and_morty_logo, "")
     data object LocationsScreen : NavigationScreen("locations_screen", R.drawable.location_pin, "Locations")
     data object EpisodesScreen : NavigationScreen("episodes_screen", R.drawable.episodes, "Episodes")
+
+    data object WelcomeGamesScreen : NavigationScreen("welcome_games_screen", R.drawable.steam_icon_logo, "")
+    data object HomeGamesScreen : NavigationScreen("home_games_screen", R.drawable.steam_icon_logo, "")
 }

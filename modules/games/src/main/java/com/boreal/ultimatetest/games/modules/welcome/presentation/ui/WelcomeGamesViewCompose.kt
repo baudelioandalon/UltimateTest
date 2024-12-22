@@ -1,9 +1,8 @@
-package com.boreal.ultimatetest.rickandmorty.modules.welcome.presentation.ui
+package com.boreal.ultimatetest.games.modules.welcome.presentation.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -32,16 +31,18 @@ import com.boreal.ultimatetest.core.components.LogoSmall
 import com.boreal.ultimatetest.core.components.OutlinedText
 import com.boreal.ultimatetest.core.components.PrimaryButton
 import com.boreal.ultimatetest.core.domain.EMPTY_STRING
-import com.boreal.ultimatetest.core.ui.theme.SecondaryColor
+import com.boreal.ultimatetest.core.ui.theme.PrimaryColorGames
+import com.boreal.ultimatetest.core.ui.theme.SecondaryColorGames
 import com.boreal.ultimatetest.core.ui.theme.mediumTypo
+import com.boreal.ultimatetest.games.BuildConfig
 import com.boreal.ultimatetest.uisystem.R
 
 @Preview(showBackground = true)
 @Composable
-fun WelcomeViewCompose(
+fun WelcomeGamesViewCompose(
     navController: NavController? = null,
-    primaryColor: Color = Black,
-    secondaryColor: Color = SecondaryColor,
+    primaryColor: Color = PrimaryColorGames,
+    secondaryColor: Color = SecondaryColorGames,
     toHomeRoute: String = EMPTY_STRING
 ) {
 
@@ -58,7 +59,7 @@ fun WelcomeViewCompose(
                 .padding(top = 100.dp, bottom = 49.dp)
                 .width(300.dp)
                 .height(200.dp),
-            painter = painterResource(id = R.drawable.rick_and_morty_siluet),
+            painter = painterResource(id = R.drawable.steam_icon_logo),
             contentDescription = "logo image"
         )
         Column(
@@ -71,23 +72,14 @@ fun WelcomeViewCompose(
                 color = Black,
                 fontSize = 30.sp
             )
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Image(
-                    modifier = Modifier.padding(top = 7.dp),
-                    painter = painterResource(
-                        id = R.drawable.rick_and_morty_name
-                    ), contentDescription = "icon"
-                )
-                OutlinedText(
-                    modifier = Modifier.padding(start = 16.dp, bottom = 30.dp),
-                    text = "App",
-                    outlineWidth = 10f,
-                    fontSize = 135.sp
-                )
-
-            }
+            OutlinedText(
+                modifier = Modifier.padding(bottom = 30.dp),
+                text = "Tienda de videojuegos",
+                outlineWidth = 10f,
+                fontSize = 70.sp,
+                color = PrimaryColorGames,
+                outlineColor = SecondaryColorGames
+            )
 
             val annotatedText = buildAnnotatedString {
                 withStyle(
@@ -115,7 +107,7 @@ fun WelcomeViewCompose(
                         fontFamily = mediumTypo()
                     )
                 ) {
-                    append("RickAndMortyApi.com")
+                    append(BuildConfig.BASE_URL)
                 }
                 pop()
             }
@@ -140,16 +132,19 @@ fun WelcomeViewCompose(
                 modifier = Modifier
                     .padding(top = 35.dp, bottom = 10.dp)
                     .width(75.dp)
-                    .align(alignment = Alignment.CenterHorizontally)
+                    .align(alignment = Alignment.CenterHorizontally),
+                icon = R.drawable.games_controller_icon
             )
 
             OutlinedText(
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .padding(end = 160.dp),
-                text = "Wubba lubba dub dub",
+                text = "Dreams Gaming",
                 outlineWidth = 6f,
-                fontSize = 55.sp
+                fontSize = 55.sp,
+                color = SecondaryColorGames,
+                outlineColor = PrimaryColorGames
             )
         }
     }

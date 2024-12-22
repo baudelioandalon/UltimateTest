@@ -24,9 +24,11 @@ import com.boreal.ultimatetest.core.ui.theme.GreenStrong
 import com.boreal.ultimatetest.core.ui.theme.PrimaryColor
 import com.boreal.ultimatetest.core.ui.theme.SecondaryColor
 import com.boreal.ultimatetest.domain.NavigationScreen
+import com.boreal.ultimatetest.games.modules.home.presentation.ui.HomeGamesViewCompose
+import com.boreal.ultimatetest.games.modules.welcome.presentation.ui.WelcomeGamesViewCompose
 import com.boreal.ultimatetest.rickandmorty.modules.episodes.domain.viewmodel.EpisodesViewModel
 import com.boreal.ultimatetest.rickandmorty.modules.episodes.presentation.ui.EpisodesViewCompose
-import com.boreal.ultimatetest.rickandmorty.modules.home.ui.HomeViewCompose
+import com.boreal.ultimatetest.rickandmorty.modules.home.presentation.ui.HomeViewCompose
 import com.boreal.ultimatetest.rickandmorty.modules.home.viewmodel.HomeViewModel
 import com.boreal.ultimatetest.rickandmorty.modules.locations.domain.viewmodel.LocationsViewModel
 import com.boreal.ultimatetest.rickandmorty.modules.locations.ui.LocationViewCompose
@@ -45,7 +47,7 @@ fun MainViewCompose() {
 
     LaunchedEffect(currentBackStackEntry) {
         currentBackStackEntry?.destination?.route?.let { route ->
-            showBottomBar = route != NavigationScreen.WelcomeScreen.route
+            showBottomBar = route != NavigationScreen.WelcomeGamesScreen.route
         }
     }
 
@@ -78,7 +80,7 @@ fun MainViewCompose() {
             NavHost(
                 modifier = Modifier.padding(it),
                 navController = navController,
-                startDestination = NavigationScreen.WelcomeScreen.route
+                startDestination = NavigationScreen.WelcomeGamesScreen.route
             ) {
 
                 composable(route = NavigationScreen.WelcomeScreen.route) {
@@ -111,6 +113,25 @@ fun MainViewCompose() {
                     EpisodesViewCompose(
                         navController = navController,
                         episodesViewModel = episodesViewModel,
+                        primaryColor = PrimaryColor,
+                        secondaryColor = SecondaryColor
+                    )
+                }
+
+                //Games
+
+                composable(route = NavigationScreen.WelcomeGamesScreen.route) {
+                    WelcomeGamesViewCompose(
+                        navController = navController,
+                        toHomeRoute = NavigationScreen.HomeGamesScreen.route,
+                        primaryColor = PrimaryColor,
+                        secondaryColor = SecondaryColor
+                    )
+                }
+
+                composable(route = NavigationScreen.HomeGamesScreen.route) {
+                    HomeGamesViewCompose(
+                        navController = navController,
                         primaryColor = PrimaryColor,
                         secondaryColor = SecondaryColor
                     )

@@ -26,6 +26,7 @@
             <option value="$PROJECT_DIR$/library/core" />
             <option value="$PROJECT_DIR$/library/uisystem" />
             <option value="$PROJECT_DIR$/modules" />
+            <option value="$PROJECT_DIR$/modules/games" />
             <option value="$PROJECT_DIR$/modules/rickandmorty" />
           </set>
         </option>

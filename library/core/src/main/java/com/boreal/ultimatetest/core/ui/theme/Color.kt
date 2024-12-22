@@ -37,6 +37,10 @@ val GrayBorder = Color(0xFFCACACA)
 val BlackText = Color(0xFF1C212E)
 val BlueLight = Color(0xE8CCEDFF)
 
+val PrimaryColorGames = Color(0xFF111D2E)
+val SecondaryColorGames = Color(0xFF1387B8)
+
+
 val Teal200 = Color(0xFF03DAC5)
 val StarColor = Color(0xFFF7CF52)
 val GrayBorderLightSeller = Color(0xFFF0F0F0)

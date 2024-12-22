@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
@@ -8,22 +8,29 @@ plugins {
 }
 
 android {
-    namespace = "com.boreal.ultimatetest"
+    namespace = "com.boreal.ultimatetest.games"
     compileSdk = AndroidConfig.compileSdk
 
     defaultConfig {
-        applicationId = AndroidConfig.applicationId
         minSdk = AndroidConfig.minSdk
-        versionCode = AndroidConfig.versionCode
-        versionName = AndroidConfig.versionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
+        debug {
+            isMinifyEnabled = false
+            isJniDebuggable = true
+            buildConfigField(
+                type = "String",
+                name = "BASE_URL",
+                "\"https://www.freetogame.com/\""
+            )
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+            )
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -41,29 +48,23 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
-    }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
     }
 }
 
 dependencies {
 
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(project(":library:uisystem"))
     implementation(project(":library:core"))
-    implementation(project(":modules:rickandmorty"))
-    implementation(project(":modules:games"))
 
     //Coroutines
     implementation(libs.kotlinx.coroutines.core)
@@ -92,11 +93,10 @@ dependencies {
     implementation(libs.lottie.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
 
-
     //Ktor & kotlin Serialization
     implementation("io.ktor:ktor-client-android:2.3.10")
     implementation("io.ktor:ktor-client-serialization:2.3.10")
-    implementation(libs.kotlinx.serialization.json)
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
     implementation("io.ktor:ktor-client-logging-jvm:2.3.10")
     implementation("io.ktor:ktor-client-content-negotiation:2.3.10")
     implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.10")
@@ -109,5 +109,4 @@ dependencies {
     //Dagger Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
-
 }

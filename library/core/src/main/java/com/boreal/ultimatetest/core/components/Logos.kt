@@ -10,9 +10,14 @@ import androidx.compose.ui.unit.dp
 import com.boreal.ultimatetest.uisystem.R
 
 @Composable
-fun LogoBlue(modifier: Modifier = Modifier) {
+fun LogoSmall(
+    modifier: Modifier = Modifier,
+    icon: Int = R.drawable.boreal_logo
+) {
     Image(
-        modifier = modifier.width(75.dp).fillMaxWidth(),
-        painter = painterResource(id = R.drawable.boreal_logo), contentDescription = "icon"
+        modifier = modifier
+            .width(75.dp)
+            .fillMaxWidth(),
+        painter = painterResource(id = icon), contentDescription = "icon"
     )
 }
