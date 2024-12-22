@@ -47,8 +47,6 @@ fun HomeGamesViewCompose(
         homeViewModel?.getList()
     }
 
-
-
     Scaffold(topBar = {
 
     }) {
