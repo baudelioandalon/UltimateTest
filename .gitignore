@@ -4,3 +4,4 @@
 /buildSrc/build/
 /buildSrc/.gradle/
 /.idea/assetWizardSettings.xml
+/.idea/modules/app/UltimateTest.app.iml
