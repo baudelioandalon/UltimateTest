@@ -1,7 +1,9 @@
 package com.boreal.ultimatetest.games.di
 
 
+import com.boreal.ultimatetest.games.domain.interfaces.GamesLocalRepository
 import com.boreal.ultimatetest.games.domain.interfaces.GamesRepository
+import com.boreal.ultimatetest.games.modules.edit_data.data.DefaultGamesLocalRepository
 import com.boreal.ultimatetest.games.modules.home.data.DefaultGamesRepository
 import dagger.Binds
 import dagger.Module
@@ -16,5 +18,11 @@ abstract class RepositoryGamesModule {
     abstract fun bindGamesRepository(
         defaultGamesRepository: DefaultGamesRepository
     ): GamesRepository
+
+
+    @Binds
+    abstract fun bindGamesLocalRepository(
+        defaultGamesLocalRepository: DefaultGamesLocalRepository
+    ): GamesLocalRepository
 
 }

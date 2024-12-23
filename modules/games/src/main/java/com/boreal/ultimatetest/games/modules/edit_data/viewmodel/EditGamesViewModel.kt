@@ -1,31 +1,30 @@
 package com.boreal.ultimatetest.games.modules.edit_data.viewmodel
 
-import com.boreal.ultimatetest.core.domain.EmptyIn
 import com.boreal.ultimatetest.core.domain.base.BaseViewModel
-import com.boreal.ultimatetest.core.domain.base.UiState
-import com.boreal.ultimatetest.core.domain.network.ApiResponse
 import com.boreal.ultimatetest.core.domain.network.StateApi
-import com.boreal.ultimatetest.core.domain.network.error
-import com.boreal.ultimatetest.core.domain.network.loading
-import com.boreal.ultimatetest.core.domain.network.success
-import com.boreal.ultimatetest.games.domain.model.GamesResponseModel
-import com.boreal.ultimatetest.games.domain.use_cases.GetListGamesUseCase
+import com.boreal.ultimatetest.games.domain.model.GamesModelItemDto
+import com.boreal.ultimatetest.games.domain.model.GamesResponseModelItem
+import com.boreal.ultimatetest.games.domain.use_cases.DeleteGameUseCase
+import com.boreal.ultimatetest.games.domain.use_cases.SetUpdateGameUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
 class EditGamesViewModel @Inject constructor(
-    private val getListCharactersUseCase: GetListGamesUseCase
+    private val setUpdateGameUseCase: SetUpdateGameUseCase,
+    private val deleteGameUseCase: DeleteGameUseCase
 ) : BaseViewModel() {
 
 
-    private val _gameList = MutableStateFlow<ApiResponse<GamesResponseModel>?>(null)
-    private val _uiStateGamesList = MutableStateFlow<UiState<GamesResponseModel?>>(UiState.None)
-    val uiStateGamesList: StateFlow<UiState<GamesResponseModel?>> = _uiStateGamesList
+    private val _updateGame = MutableStateFlow<StateApi?>(null)
+    private val _deleteGame = MutableStateFlow<StateApi?>(null)
+    val updateGame: StateFlow<StateApi?> = _updateGame.asStateFlow()
+    val deleteGame: StateFlow<StateApi?> = _deleteGame.asStateFlow()
 
 
     /**
@@ -39,38 +38,77 @@ class EditGamesViewModel @Inject constructor(
      * @return ApiResponse<GamesResponseModel>
      */
     fun updateData(
+        item: GamesResponseModelItem?,
         titleText: String,
         descriptionText: String,
         genreText: String,
         publisherText: String,
-        releaseDateText: String,
-        idElement: Int
+        releaseDateText: String
     ) {
         executeFlow {
-            if (_gameList.value?.status == StateApi.Loading || _gameList.value?.status == StateApi.Success) return@executeFlow
-            _gameList.update {
-                loading()
+            if (_updateGame.value == StateApi.Loading || _updateGame.value == StateApi.Success) return@executeFlow
+            _updateGame.update {
+                StateApi.Loading
             }
-            _uiStateGamesList.value = UiState.Loading
-            getListCharactersUseCase.execute(
-                EmptyIn
+            setUpdateGameUseCase.execute(
+                SetUpdateGameUseCase.Input(
+                    game = GamesModelItemDto(
+                        id = item?.id ?: 0,
+                        title = titleText,
+                        short_description = descriptionText,
+                        genre = genreText,
+                        publisher = publisherText,
+                        release_date = releaseDateText,
+                        thumbnail = item?.thumbnail.orEmpty(),
+                        platform = item?.platform.orEmpty(),
+                        freetogame_profile_url = item?.freetogame_profile_url.orEmpty(),
+                        game_url = item?.game_url.orEmpty(),
+                        developer = item?.developer.orEmpty()
+                    )
+                )
             ).catch { cause ->
-                _gameList.update {
+                _updateGame.update {
                     error(cause.message ?: "Error")
                 }
-                _uiStateGamesList.value = UiState.Error(cause.message ?: "Error")
             }.collect { result ->
-                result.response.success { response ->
-                    _gameList.update {
-                        response
+                if (result.response == StateApi.Success) {
+                    _updateGame.update {
+                        result.response
                     }
-                    _uiStateGamesList.value = UiState.Success(response.response)
+                } else if (result.response == StateApi.Error) {
+                    _updateGame.update {
+                        result.response
+                    }
                 }
-                result.response.error { error ->
-                    _gameList.update {
-                        error
+            }
+        }
+    }
+
+    fun deleteItem(
+        itemId: Int
+    ) {
+        executeFlow {
+            if (_deleteGame.value == StateApi.Loading || _deleteGame.value == StateApi.Success) return@executeFlow
+            _deleteGame.update {
+                StateApi.Loading
+            }
+            deleteGameUseCase.execute(
+                DeleteGameUseCase.Input(
+                    gameId = itemId
+                )
+            ).catch { cause ->
+                _deleteGame.update {
+                    error(cause.message ?: "Error")
+                }
+            }.collect { result ->
+                if (result.response == StateApi.Success) {
+                    _deleteGame.update {
+                        result.response
                     }
-                    _uiStateGamesList.value = UiState.Error(error.failure ?: "Error")
+                } else if (result.response == StateApi.Error) {
+                    _deleteGame.update {
+                        result.response
+                    }
                 }
             }
         }

@@ -6,11 +6,13 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.boreal.ultimatetest.games.domain.model.GamesModelItemDto
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface GamesDao {
+
     @Query("SELECT * FROM games")
-    fun getAllGames(): List<GamesModelItemDto>
+    fun getAllGames(): Flow<List<GamesModelItemDto>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg users: GamesModelItemDto)
@@ -25,6 +27,6 @@ interface GamesDao {
         releaseDate: String
     )
 
-    @Delete
-    fun deleteGame(user: GamesModelItemDto)
+    @Query("DELETE FROM games WHERE id = :id")
+    fun deleteGame(id: Int)
 }

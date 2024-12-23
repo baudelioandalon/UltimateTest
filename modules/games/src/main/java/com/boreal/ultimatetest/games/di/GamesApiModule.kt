@@ -1,5 +1,6 @@
 package com.boreal.ultimatetest.games.di
 
+import com.boreal.ultimatetest.games.domain.interfaces.GamesLocalRepository
 import com.boreal.ultimatetest.games.modules.home.data.data_source.remote.ExecuteGetGamesListDataSource
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,9 +13,10 @@ object GamesApiModule {
 
 
     @Provides
-    fun provideExecuteGetListDataSource(httpClient: HttpClient): ExecuteGetGamesListDataSource =
+    fun provideExecuteGetListDataSource(httpClient: HttpClient, gamesLocalRepository: GamesLocalRepository): ExecuteGetGamesListDataSource =
         ExecuteGetGamesListDataSource(
-            httpClient
+            httpClient,
+            gamesLocalRepository
         )
 
 }

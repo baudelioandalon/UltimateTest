@@ -1,5 +1,6 @@
 package com.boreal.ultimatetest.games.modules.edit_data.presentation.ui
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -53,6 +54,8 @@ fun EditViewCompose(
     var genreText by rememberSaveable { mutableStateOf(dataToShow?.genre.orEmpty()) }
     var publisherText by rememberSaveable { mutableStateOf(dataToShow?.publisher.orEmpty()) }
     var releaseDateText by rememberSaveable { mutableStateOf(dataToShow?.release_date.orEmpty()) }
+    val context = LocalContext.current
+
 
     val scrollRemember = rememberScrollState()
 
@@ -156,13 +159,26 @@ fun EditViewCompose(
                         releaseDateText.isNotEmpty() && releaseDateText != dataToShow?.release_date
             ) {
                 editViewModel.updateData(
+                    item = dataToShow,
                     titleText = titleText,
                     descriptionText = descriptionText,
                     genreText = genreText,
                     publisherText = publisherText,
-                    releaseDateText = releaseDateText,
-                    idElement = dataToShow?.id ?: -1
+                    releaseDateText = releaseDateText
                 )
+                navController.popBackStack(NavigationGamesScreen.HomeGamesScreen.route, false)
+                Toast.makeText(context, "Datos actualizados", Toast.LENGTH_SHORT).show()
+            }
+
+            PrimaryButton(
+                modifier = Modifier.padding(top = 40.dp),
+                text = "Eliminar",
+                primaryColor = PrimaryColorGames,
+                secondaryColor = SecondaryColorGames
+            ) {
+                editViewModel.deleteItem(dataToShow?.id ?: 0)
+                navController.popBackStack(NavigationGamesScreen.HomeGamesScreen.route, false)
+                Toast.makeText(context, "Eliminado", Toast.LENGTH_SHORT).show()
             }
             Spacer(
                 modifier = Modifier.weight(1f)

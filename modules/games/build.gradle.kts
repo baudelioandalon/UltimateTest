@@ -5,7 +5,7 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("org.jetbrains.kotlin.plugin.serialization")
     id("kotlin-parcelize")
-    id("com.google.devtools.ksp")
+//    id("com.google.devtools.ksp")
 }
 
 android {
@@ -101,9 +101,10 @@ dependencies {
     implementation("io.ktor:ktor-client-logging-jvm:2.3.10")
     implementation("io.ktor:ktor-client-content-negotiation:2.3.10")
     implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.10")
+
     //Room
     implementation("androidx.room:room-runtime:2.6.1")
-    ksp("androidx.room:room-compiler:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
 
     implementation(libs.koin.android)

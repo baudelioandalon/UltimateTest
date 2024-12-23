@@ -1,32 +1,16 @@
 package com.boreal.ultimatetest.games.domain.interfaces
 
+import com.boreal.ultimatetest.core.domain.network.StateApi
 import com.boreal.ultimatetest.games.domain.model.GamesModelItemDto
-import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
 
-class GamesLocalRepository @Inject constructor(
-    private val gamesDao: GamesDao
-) {
+interface GamesLocalRepository {
 
-    fun getAllGames(): List<GamesModelItemDto> {
-        return gamesDao.getAllGames()
-    }
+    suspend fun getAllGames(): Flow<List<GamesModelItemDto>>
 
-    fun insertGame(user: GamesModelItemDto) {
-        gamesDao.insertAll(user)
-    }
+    suspend fun insertGame(game: GamesModelItemDto):Flow<StateApi>
 
-    fun updateGame(user: GamesModelItemDto) {
-        gamesDao.updateGame(
-            id = user.id,
-            title = user.title.orEmpty(),
-            genre = user.genre.orEmpty(),
-            publisher = user.publisher.orEmpty(),
-            releaseDate = user.release_date.orEmpty(),
-            description = user.short_description.orEmpty(),
-        )
-    }
+    suspend fun updateGame(game: GamesModelItemDto):Flow<StateApi>
 
-    fun deleteGame(user: GamesModelItemDto) {
-        gamesDao.deleteGame(user)
-    }
+    suspend fun deleteGame(gameId: Int):Flow<StateApi>
 }

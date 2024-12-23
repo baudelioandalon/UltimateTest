@@ -6,5 +6,5 @@ import com.boreal.ultimatetest.games.domain.model.GamesModelItemDto
 
 @Database(entities = [GamesModelItemDto::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun userDao(): GamesDao
+    abstract fun gamesDao(): GamesDao
 }
