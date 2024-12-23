@@ -44,6 +44,45 @@ Ejemplo de uso de herramientas de Android
 6. Gestión de Estados:
 * Gestiona los estados de la UI (cargando, éxito, error) de manera eficiente.
 
+Proyecto en API FREE TO GAMES:
+
+Rama -> main
+
+![WhatsApp Image 2024-12-23 at 16 18 26 (6)](https://github.com/user-attachments/assets/bc9fb564-ca79-4dbe-ba0e-175d29c15365)
+
+
+![WhatsApp Image 2024-12-23 at 16 18 26 (5)](https://github.com/user-attachments/assets/7dd6c113-c413-443c-9b83-4f4fb78974cc)
+![WhatsApp Image 2024-12-23 at 16 18 26 (4)](https://github.com/user-attachments/assets/d0eae328-5869-4f10-aee0-0c8a05dd823d)
+
+![WhatsApp Image 2024-12-23 at 16 18 26](https://github.com/user-attachments/assets/afbedf91-5eea-4deb-a941-d49469608d70)
+![WhatsApp Image 2024-12-23 at 16 18 26 (3)](https://github.com/user-attachments/assets/29f296b1-da9c-4937-8afc-bd963eb12d95)
+![WhatsApp Image 2024-12-23 at 16 18 26 (2)](https://github.com/user-attachments/assets/ba7c8b42-e479-4242-9353-55133c188951)
+![WhatsApp Image 2024-12-23 at 16 18 26 (1)](https://github.com/user-attachments/assets/0ed34aab-403a-45c9-8143-6f20db06ec8a)
+
+* Explicacion de la solucion
+Se decidio aplicar Compose debido a que la implementacion es mas rapida demas de la gran cantidad de librerias y compatibilidad con librerias como Dagger y Room,
+Se empezó por una pantalla de Bienvenida en la cual colocamos el endpoint a consultar
+
+* Posteriormente en la siguiente pantalla se hace una consulta a backend por medio de Ktor, para las peticiones se construyó sobre un core de conexion hecho con el mismo ktor, para el manejo de peticiones y errores.
+* En la misma pantalla se hace el guardado en Room de los datos, en caso de NO haber internet pero si de tener registros sé muestran los registros locales, en caso de no haber ninguno se verá una pantalla en blanco
+
+* Al seleccionar un videojuego vamos a la pantalla de detalles, debido al tiempo no se definio con todos los campos, pero se muestran los mas importantes.
+* En la misma pantalla de detalle existe un boton para ir a "Editar" el videojuego y alguno de sus datos.
+
+NOTA:
+***********************************************************
+** Se hizo bajo el mismo repositorio para ahorrar tiempo **
+** Se colocó en la rama main el desarrollo ****************
+***********************************************************
+
+
+
+
+
+Proyecto en API RICK AND MORTY:
+
+Rama -> release/rick-and-morty-api
+
 * Alcance no alcanzado:
 Al no contar con más tiempo, se decidio que el almacenamiento local de los datos se llevara acabo por el momento solo en el ViewModel, posteriormente habrá una actualización para almacenarnos con Realm.
 
@@ -90,3 +129,8 @@ de forma horizontal se muestra una lista de los habitantes y un pequeño contado
 
 
 ![episodes](https://github.com/user-attachments/assets/e4a44392-41a9-41c4-87cf-fe35cd101040)
+
+
+
+
+
