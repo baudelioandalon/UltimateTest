@@ -84,7 +84,7 @@ fun MainViewCompose() {
             NavHost(
                 modifier = Modifier.padding(it),
                 navController = navController,
-                startDestination = NavigationGamesScreen.HomeGamesScreen.route
+                startDestination = NavigationGamesScreen.WelcomeGamesScreen.route
             ) {
 
                 composable(route = NavigationScreen.WelcomeScreen.route) {
