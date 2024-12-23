@@ -69,5 +69,9 @@ class HomeGamesViewModel @Inject constructor(
         gameSelectedItem = position
     }
 
+    fun getLocalGames() = _gameList.value?.response
+
+    fun getGameSelected() = _gameList.value?.response?.find { it.id == gameSelectedItem }
+
 
 }

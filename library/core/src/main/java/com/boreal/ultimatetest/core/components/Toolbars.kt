@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -29,7 +28,6 @@ import com.boreal.ultimatetest.core.domain.EMPTY_STRING
 import com.boreal.ultimatetest.uisystem.R
 
 @Preview(showBackground = true)
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ToolbarTitle(
     modifier: Modifier = Modifier,

@@ -3,13 +3,11 @@ package com.boreal.ultimatetest.games.modules.home.presentation.ui
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
@@ -17,10 +15,8 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -42,10 +38,9 @@ import com.boreal.ultimatetest.core.domain.EMPTY_STRING
 import com.boreal.ultimatetest.core.domain.base.UiState
 import com.boreal.ultimatetest.core.domain.base.log
 import com.boreal.ultimatetest.core.ui.theme.SecondaryColorGames
-import com.boreal.ultimatetest.core.ui.theme.categorySelectorColors
-import com.boreal.ultimatetest.core.utils.limit
-import com.boreal.ultimatetest.games.components.CategorySelectorItem
+import com.boreal.ultimatetest.games.components.CategoryListContainer
 import com.boreal.ultimatetest.games.components.ToolbarSearch
+import com.boreal.ultimatetest.games.domain.navigation.NavigationGamesScreen
 import com.boreal.ultimatetest.games.modules.home.viewmodel.HomeGamesViewModel
 import com.boreal.ultimatetest.uisystem.R
 import java.util.Locale
@@ -187,7 +182,7 @@ fun HomeGamesViewCompose(
                                     listResult?.data?.find { it.thumbnail == item }?.id
                                 imageSelected?.toString()?.log("IMG_SELECTED")
                                 homeViewModel?.setGameSelected(imageSelected ?: -1)
-//                                navController?.navigate(NavigationGamesScreen.DetailGamesScreen.route)
+                                navController?.navigate(NavigationGamesScreen.DetailGamesScreen.route)
                             }
 
                         })
@@ -197,36 +192,3 @@ fun HomeGamesViewCompose(
     }
 }
 
-
-@Composable
-fun CategoryListContainer(
-    itemCategory: List<String> = emptyList(),
-    categorySelected: (String, Int) -> Unit
-) {
-    var itemCategorySelected by rememberSaveable { mutableIntStateOf(-1) }
-    val defaultSize = if (itemCategorySelected != -1) 50.dp.plus(15.dp) else 50.dp
-    Column(
-        modifier = Modifier.background(White)
-    ) {
-        LazyRow(
-            modifier = Modifier.padding(
-                top = 15.dp, bottom = 18.dp
-            )
-        ) {
-            itemsIndexed(items = itemCategory) { index, item ->
-                CategorySelectorItem(
-                    modifier = Modifier.padding(
-                        start = if (index == 0) 30.dp else 10.dp,
-                        end = if (index == itemCategory.limit()) 30.dp else 10.dp
-                    ),
-                    size = if (itemCategorySelected == index) defaultSize else 50.dp,
-                    category = item,
-                    color = categorySelectorColors[index % categorySelectorColors.size]
-                ) {
-                    itemCategorySelected = if (index == itemCategorySelected) -1 else index
-                    categorySelected(item, itemCategorySelected)
-                }
-            }
-        }
-    }
-}

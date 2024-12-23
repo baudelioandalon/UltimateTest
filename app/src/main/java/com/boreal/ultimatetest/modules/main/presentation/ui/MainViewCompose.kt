@@ -24,6 +24,7 @@ import com.boreal.ultimatetest.core.ui.theme.PrimaryColor
 import com.boreal.ultimatetest.core.ui.theme.SecondaryColor
 import com.boreal.ultimatetest.domain.NavigationScreen
 import com.boreal.ultimatetest.games.domain.navigation.NavigationGamesScreen
+import com.boreal.ultimatetest.games.modules.detail.presentation.ui.DetailGamesViewCompose
 import com.boreal.ultimatetest.games.modules.home.presentation.ui.HomeGamesViewCompose
 import com.boreal.ultimatetest.games.modules.home.viewmodel.HomeGamesViewModel
 import com.boreal.ultimatetest.games.modules.welcome.presentation.ui.WelcomeGamesViewCompose
@@ -140,14 +141,13 @@ fun MainViewCompose() {
                     )
                 }
 
-//                composable(route = NavigationGamesScreen.DetailGamesScreen.route) {
-//                    HomeGamesViewCompose(
-//                        navController = navController,
-//                        homeViewModel = homeGamesViewModel,
-//                        primaryColor = PrimaryColor,
-//                        secondaryColor = SecondaryColor
-//                    )
-//                }
+                composable(route = NavigationGamesScreen.DetailGamesScreen.route) {
+                    DetailGamesViewCompose(
+                        navController = navController,
+                        dataToShow = homeGamesViewModel.getGameSelected(),
+                        allGames = homeGamesViewModel.getLocalGames()
+                    )
+                }
             }
         })
 }
