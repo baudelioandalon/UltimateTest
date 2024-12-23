@@ -28,6 +28,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.boreal.ultimatetest.core.components.CircularIcon
+import com.boreal.ultimatetest.core.domain.EMPTY_STRING
 
 //
 @Composable
@@ -36,7 +37,8 @@ fun ToolbarSearch(
     primaryColor: Color = MaterialTheme.colors.primary,
     backClicked: (() -> Unit)? = null,
     searchedText: ((String) -> Unit)? = null,
-    settingsClicked: (() -> Unit)? = null
+    showClose: Boolean = false,
+    closeClicked: (() -> Unit)? = null
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     var searchText by rememberSaveable { mutableStateOf("") }
@@ -78,6 +80,7 @@ fun ToolbarSearch(
                     modifier = Modifier.padding(horizontal = 20.dp),
                     value = searchText,
                     placeHolder = "Buscar",
+                    showClose = showClose,
                     primaryColor = primaryColor,
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                     keyboardActions = KeyboardActions(
@@ -88,7 +91,8 @@ fun ToolbarSearch(
                         searchedText?.invoke(it)
                     },
                     settingsClicked = {
-                        settingsClicked?.invoke()
+                        searchText = EMPTY_STRING
+                        closeClicked?.invoke()
                     }
                 )
 

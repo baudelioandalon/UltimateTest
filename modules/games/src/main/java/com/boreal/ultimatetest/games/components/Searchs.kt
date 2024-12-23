@@ -301,6 +301,7 @@ fun SearcherWithButton(
         disabledTextColor = GrayLetterHint,
     ),
     visualTransformation: VisualTransformation = VisualTransformation.None,
+    showClose: Boolean = false,
     settingsClicked: (() -> Unit)? = null,
     itemClicked: (() -> Unit)? = null
 ) {
@@ -357,12 +358,15 @@ fun SearcherWithButton(
                             shape = CircleShape,
                             backgroundColor = GrayBackgroundSearch,
                             onClick = { settingsClicked?.invoke() }) {
-                            Icon(
-                                modifier = Modifier.wrapContentSize(),
-                                painter = painterResource(id = R.drawable.ic_settings_gray),
-                                contentDescription = "settingsIcon",
-                                tint = Black
-                            )
+                            if (showClose) {
+                                Icon(
+                                    modifier = Modifier.wrapContentSize(),
+                                    painter = painterResource(id = R.drawable.ic_close_new),
+                                    contentDescription = "settingsIcon",
+                                    tint = Black
+                                )
+                            }
+
                         }
                     }
                 },

@@ -27,6 +27,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -63,15 +65,24 @@ fun HomeGamesViewCompose(
     val listResult = homeViewModel?.uiStateGamesList?.collectAsStateWithLifecycle()?.value
     var searchedText by remember { mutableStateOf(EMPTY_STRING) }
     var categorySelected by remember { mutableStateOf(EMPTY_STRING) }
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val focusManager = LocalFocusManager.current
 
     LaunchedEffect(Unit) {
         homeViewModel?.getList()
     }
 
     Scaffold(topBar = {
-        ToolbarSearch(primaryColor = SecondaryColorGames,
+        ToolbarSearch(
+            primaryColor = SecondaryColorGames,
+            showClose = searchedText.isNotEmpty(),
             searchedText = {
                 searchedText = it
+            },
+            closeClicked = {
+                searchedText = EMPTY_STRING
+                keyboardController?.hide()
+                focusManager.clearFocus()
             })
     }) {
 
