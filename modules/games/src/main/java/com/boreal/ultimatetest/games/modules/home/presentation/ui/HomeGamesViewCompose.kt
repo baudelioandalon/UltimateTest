@@ -44,7 +44,6 @@ import com.boreal.ultimatetest.core.ui.theme.categorySelectorColors
 import com.boreal.ultimatetest.core.utils.limit
 import com.boreal.ultimatetest.games.components.CategorySelectorItem
 import com.boreal.ultimatetest.games.components.ToolbarSearch
-import com.boreal.ultimatetest.games.domain.navigation.NavigationGamesScreen
 import com.boreal.ultimatetest.games.modules.home.viewmodel.HomeGamesViewModel
 import com.boreal.ultimatetest.uisystem.R
 import java.util.Locale
@@ -173,7 +172,8 @@ fun HomeGamesViewCompose(
                         zoomWhenSelected = true,
                         itemClicked = { index, item ->
                             if (listResult is UiState.Success) {
-                                val imageSelected = listResult?.data?.find { it.thumbnail == item }?.id
+                                val imageSelected =
+                                    listResult?.data?.find { it.thumbnail == item }?.id
                                 imageSelected?.toString()?.log("IMG_SELECTED")
                                 homeViewModel?.setGameSelected(imageSelected ?: -1)
 //                                navController?.navigate(NavigationGamesScreen.DetailGamesScreen.route)
