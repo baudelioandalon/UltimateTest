@@ -11,4 +11,5 @@ sealed class NavigationGamesScreen(
     data object WelcomeGamesScreen : NavigationGamesScreen("welcome_games_screen", R.drawable.steam_icon_logo, "")
     data object HomeGamesScreen : NavigationGamesScreen("home_games_screen", R.drawable.steam_icon_logo, "")
     data object DetailGamesScreen : NavigationGamesScreen("detail_games_screen", R.drawable.steam_icon_logo, "")
+    data object EditGamesScreen : NavigationGamesScreen("edit_games_screen", R.drawable.steam_icon_logo, "")
 }

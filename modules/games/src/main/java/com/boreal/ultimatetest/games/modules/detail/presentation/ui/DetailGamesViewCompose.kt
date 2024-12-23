@@ -44,6 +44,7 @@ import com.boreal.ultimatetest.games.components.SeparatorGray
 import com.boreal.ultimatetest.games.components.ShareButton
 import com.boreal.ultimatetest.games.domain.model.GamesResponseModel
 import com.boreal.ultimatetest.games.domain.model.GamesResponseModelItem
+import com.boreal.ultimatetest.games.domain.navigation.NavigationGamesScreen
 import com.boreal.ultimatetest.uisystem.R
 
 @Composable
@@ -147,6 +148,12 @@ fun DetailGamesViewCompose(
                             text = "Ir a la pagina del videojuego"
                         ) {
 
+                        }
+
+                        SelectorDetail(
+                            text = "Editar información"
+                        ) {
+                            navController?.navigate(NavigationGamesScreen.EditGamesScreen.route)
                         }
                         SeparatorGray(
                             modifier = Modifier

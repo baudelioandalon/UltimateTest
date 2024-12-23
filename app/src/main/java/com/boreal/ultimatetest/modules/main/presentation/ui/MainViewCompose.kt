@@ -25,6 +25,7 @@ import com.boreal.ultimatetest.core.ui.theme.SecondaryColor
 import com.boreal.ultimatetest.domain.NavigationScreen
 import com.boreal.ultimatetest.games.domain.navigation.NavigationGamesScreen
 import com.boreal.ultimatetest.games.modules.detail.presentation.ui.DetailGamesViewCompose
+import com.boreal.ultimatetest.games.modules.edit_data.presentation.ui.EditViewCompose
 import com.boreal.ultimatetest.games.modules.home.presentation.ui.HomeGamesViewCompose
 import com.boreal.ultimatetest.games.modules.home.viewmodel.HomeGamesViewModel
 import com.boreal.ultimatetest.games.modules.welcome.presentation.ui.WelcomeGamesViewCompose
@@ -146,6 +147,14 @@ fun MainViewCompose() {
                         navController = navController,
                         dataToShow = homeGamesViewModel.getGameSelected(),
                         allGames = homeGamesViewModel.getLocalGames()
+                    )
+                }
+
+
+                composable(route = NavigationGamesScreen.EditGamesScreen.route) {
+                    EditViewCompose(
+                        navController = navController,
+                        dataToShow = homeGamesViewModel.getGameSelected()
                     )
                 }
             }
