@@ -5,10 +5,8 @@ import com.boreal.ultimatetest.core.domain.base.BaseViewModel
 import com.boreal.ultimatetest.core.domain.base.UiState
 import com.boreal.ultimatetest.core.domain.network.ApiResponse
 import com.boreal.ultimatetest.core.domain.network.StateApi
-import com.boreal.ultimatetest.core.domain.network.error
 import com.boreal.ultimatetest.core.domain.network.loading
 import com.boreal.ultimatetest.games.domain.model.GamesResponseModel
-import com.boreal.ultimatetest.games.domain.model.GamesResponseModelItem
 import com.boreal.ultimatetest.games.domain.use_cases.GetListGamesUseCase
 import com.boreal.ultimatetest.games.domain.use_cases.GetLocalListGamesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -65,40 +63,38 @@ class HomeGamesViewModel @Inject constructor(
                         _gameList.update {
                             ApiResponse(
                                 status = StateApi.Success,
-                                response = with(GamesResponseModel()) {
-                                    data.forEach { model ->
-                                        add(
-                                            GamesResponseModelItem(
-                                                developer = model.developer.orEmpty(),
-                                                freetogame_profile_url = model.freetogame_profile_url.orEmpty(),
-                                                game_url = model.game_url.orEmpty(),
-                                                genre = model.genre.orEmpty(),
-                                                id = model.id,
-                                                platform = model.platform.orEmpty(),
-                                                publisher = model.publisher.orEmpty(),
-                                                release_date = model.release_date.orEmpty(),
-                                                short_description = model.short_description.orEmpty(),
-                                                thumbnail = model.thumbnail.orEmpty(),
-                                                title = model.title.orEmpty()
-                                            )
-                                        )
-                                    }
-                                    this
-                                }
+                                response = GamesResponseModel().convertToList(data)
                             )
                         }
                         _uiStateGamesList.value = UiState.Success(_gameList.value?.response)
                     }
                 }
 
-                result.response.error { error ->
-                    _gameList.update {
-                        ApiResponse(
-                            status = StateApi.Error
-                        )
+                if (result.response.status == StateApi.Error) {
+                    getLocalGamesListUseCase.execute(
+                        EmptyIn
+                    ).catch { cause ->
+                        _gameList.update {
+                            error(cause.message ?: "Error")
+                        }
+                        _uiStateGamesList.value = UiState.Error(cause.message ?: "Error")
+                    }.collect { finalList ->
+                        val data = finalList.response
+                        _gameList.update {
+                            ApiResponse(
+                                status = if (data.isEmpty()) StateApi.Error else StateApi.Success,
+                                response = if (data.isEmpty()) null else GamesResponseModel().convertToList(
+                                    data
+                                )
+                            )
+                        }
+                        _uiStateGamesList.value =
+                            if (data.isEmpty()) UiState.Error("Error") else UiState.Success(
+                                _gameList.value?.response
+                            )
                     }
-                    _uiStateGamesList.value = UiState.Error(error.failure ?: "Error")
                 }
+
             }
         }
     }
