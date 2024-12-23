@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,7 +23,9 @@ import com.boreal.ultimatetest.core.ui.theme.GreenStrong
 import com.boreal.ultimatetest.core.ui.theme.PrimaryColor
 import com.boreal.ultimatetest.core.ui.theme.SecondaryColor
 import com.boreal.ultimatetest.domain.NavigationScreen
+import com.boreal.ultimatetest.games.domain.navigation.NavigationGamesScreen
 import com.boreal.ultimatetest.games.modules.home.presentation.ui.HomeGamesViewCompose
+import com.boreal.ultimatetest.games.modules.home.viewmodel.HomeGamesViewModel
 import com.boreal.ultimatetest.games.modules.welcome.presentation.ui.WelcomeGamesViewCompose
 import com.boreal.ultimatetest.rickandmorty.modules.episodes.domain.viewmodel.EpisodesViewModel
 import com.boreal.ultimatetest.rickandmorty.modules.episodes.presentation.ui.EpisodesViewCompose
@@ -45,15 +46,16 @@ fun MainViewCompose() {
     var showBottomBar by rememberSaveable { mutableStateOf(false) }
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
 
-    LaunchedEffect(currentBackStackEntry) {
-        currentBackStackEntry?.destination?.route?.let { route ->
-            showBottomBar = route != NavigationScreen.WelcomeGamesScreen.route
-        }
-    }
+//    LaunchedEffect(currentBackStackEntry) {
+//        currentBackStackEntry?.destination?.route?.let { route ->
+//            showBottomBar = route != NavigationScreen.WelcomeGamesScreen.route
+//        }
+//    }
 
     val homeViewModel: HomeViewModel = hiltViewModel()
     val locationsViewModel: LocationsViewModel = hiltViewModel()
     val episodesViewModel: EpisodesViewModel = hiltViewModel()
+    val homeGamesViewModel: HomeGamesViewModel = hiltViewModel()
 
     androidx.compose.material.Scaffold(modifier = Modifier
         .fillMaxWidth(),
@@ -80,7 +82,7 @@ fun MainViewCompose() {
             NavHost(
                 modifier = Modifier.padding(it),
                 navController = navController,
-                startDestination = NavigationScreen.WelcomeGamesScreen.route
+                startDestination = NavigationGamesScreen.HomeGamesScreen.route
             ) {
 
                 composable(route = NavigationScreen.WelcomeScreen.route) {
@@ -120,18 +122,28 @@ fun MainViewCompose() {
 
                 //Games
 
-                composable(route = NavigationScreen.WelcomeGamesScreen.route) {
+                composable(route = NavigationGamesScreen.WelcomeGamesScreen.route) {
                     WelcomeGamesViewCompose(
                         navController = navController,
-                        toHomeRoute = NavigationScreen.HomeGamesScreen.route,
+                        toHomeRoute = NavigationGamesScreen.HomeGamesScreen.route,
                         primaryColor = PrimaryColor,
                         secondaryColor = SecondaryColor
                     )
                 }
 
-                composable(route = NavigationScreen.HomeGamesScreen.route) {
+                composable(route = NavigationGamesScreen.HomeGamesScreen.route) {
                     HomeGamesViewCompose(
                         navController = navController,
+                        homeViewModel = homeGamesViewModel,
+                        primaryColor = PrimaryColor,
+                        secondaryColor = SecondaryColor
+                    )
+                }
+
+                composable(route = NavigationGamesScreen.DetailGamesScreen.route) {
+                    HomeGamesViewCompose(
+                        navController = navController,
+                        homeViewModel = homeGamesViewModel,
                         primaryColor = PrimaryColor,
                         secondaryColor = SecondaryColor
                     )

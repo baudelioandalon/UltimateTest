@@ -27,6 +27,7 @@ class HomeGamesViewModel @Inject constructor(
     private val _uiStateGamesList = MutableStateFlow<UiState<GamesResponseModel?>>(UiState.None)
     val uiStateGamesList: StateFlow<UiState<GamesResponseModel?>> = _uiStateGamesList
 
+    private var gameSelectedItem = -1
 
     /**
      * @see Obtener la lista de videojuegos
@@ -62,6 +63,10 @@ class HomeGamesViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun setGameSelected(position: Int) {
+        gameSelectedItem = position
     }
 
 

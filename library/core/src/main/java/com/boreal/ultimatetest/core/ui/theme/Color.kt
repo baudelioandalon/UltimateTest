@@ -86,3 +86,11 @@ val CategoryBackgroundSelectorTwo = Color(0xFFDAE1F4)
 val CategoryBackgroundSelectorThree = Color(0xFFF2DFE6)
 val FavoriteUnselectedColor = Color(0xFFFAF6FF)
 val FavoriteSelectedColor = Color(0xFFB691FF)
+
+
+
+val categorySelectorColors = listOf(
+    CategoryBackgroundSelectorOne,
+    CategoryBackgroundSelectorTwo,
+    CategoryBackgroundSelectorThree
+)

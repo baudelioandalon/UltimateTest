@@ -11,13 +11,20 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -26,6 +33,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -43,6 +52,7 @@ import com.boreal.ultimatetest.core.ui.theme.PrimaryColor
 import com.boreal.ultimatetest.core.utils.firstItem
 import com.boreal.ultimatetest.core.utils.limit
 import com.boreal.ultimatetest.uisystem.R
+import kotlinx.coroutines.launch
 
 @Composable
 fun ImageFromUrl(
@@ -77,20 +87,26 @@ fun ImageFromUrl(
 fun HorizontalImageViewer(
     modifier: Modifier = Modifier,
     sizeItem: Dp = 53.dp,
+    height: Dp? = null,
+    width: Dp? = null,
     colorSelected: Color = PrimaryColor,
     zoomWhenSelected: Boolean = false,
     itemList: List<String>,
     itemClicked: ((Int, String) -> Unit)? = null,
     bottomText: Boolean = false,
-    contentScale: ContentScale = ContentScale.Crop
+    contentScale: ContentScale = ContentScale.Crop,
+    placeHolder: Int = R.drawable.portal
 ) {
     var selected by rememberSaveable { mutableIntStateOf(START_INDEX) }
+    val scrollState = rememberLazyListState()
     LazyRow(
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth(),
+        state = scrollState
     ) {
         itemsIndexed(itemList) { index, item ->
-            val defaultSize =
-                if (selected == index && zoomWhenSelected) sizeItem.plus(8.dp) else sizeItem
+            val defaultSize = if (selected == index && zoomWhenSelected) sizeItem.plus(8.dp) else sizeItem
+
+
             Column(
                 modifier = Modifier.width(IntrinsicSize.Max),
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -101,7 +117,9 @@ fun HorizontalImageViewer(
                     .padding(
                         start = startPadding, end = endPadding
                     )
-                    .defaultMinSize(defaultSize, defaultSize),
+                    .defaultMinSize(
+                        minWidth = width ?: defaultSize, minHeight = height ?: defaultSize
+                    ),
                     backgroundColor = GrayBackgroundDrawerDismiss,
                     elevation = 0.dp,
                     border = if (index == selected && !zoomWhenSelected) BorderStroke(
@@ -120,7 +138,7 @@ fun HorizontalImageViewer(
                             .crossfade(true)
                             .allowHardware(false)
                             .build(),
-                        placeholder = painterResource(R.drawable.portal),
+                        placeholder = painterResource(placeHolder),
                         contentDescription = stringResource(R.string.app_name),
                         contentScale = contentScale
                     )
