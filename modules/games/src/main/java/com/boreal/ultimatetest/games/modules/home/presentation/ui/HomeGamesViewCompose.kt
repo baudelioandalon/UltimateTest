@@ -176,7 +176,7 @@ fun HomeGamesViewCompose(
                                 val imageSelected = listResult?.data?.find { it.thumbnail == item }?.id
                                 imageSelected?.toString()?.log("IMG_SELECTED")
                                 homeViewModel?.setGameSelected(imageSelected ?: -1)
-                                navController?.navigate(NavigationGamesScreen.DetailGamesScreen.route)
+//                                navController?.navigate(NavigationGamesScreen.DetailGamesScreen.route)
                             }
 
                         })
