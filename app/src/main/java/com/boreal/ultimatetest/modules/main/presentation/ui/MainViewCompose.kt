@@ -140,14 +140,14 @@ fun MainViewCompose() {
                     )
                 }
 
-                composable(route = NavigationGamesScreen.DetailGamesScreen.route) {
-                    HomeGamesViewCompose(
-                        navController = navController,
-                        homeViewModel = homeGamesViewModel,
-                        primaryColor = PrimaryColor,
-                        secondaryColor = SecondaryColor
-                    )
-                }
+//                composable(route = NavigationGamesScreen.DetailGamesScreen.route) {
+//                    HomeGamesViewCompose(
+//                        navController = navController,
+//                        homeViewModel = homeGamesViewModel,
+//                        primaryColor = PrimaryColor,
+//                        secondaryColor = SecondaryColor
+//                    )
+//                }
             }
         })
 }
