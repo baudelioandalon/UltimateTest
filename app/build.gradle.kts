@@ -95,12 +95,12 @@ dependencies {
 
 
     //Ktor & kotlin Serialization
-    implementation("io.ktor:ktor-client-android:2.3.10")
-    implementation("io.ktor:ktor-client-serialization:2.3.10")
+    implementation(libs.ktor.client.android)
+    implementation(libs.ktor.client.serialization)
     implementation(libs.kotlinx.serialization.json)
-    implementation("io.ktor:ktor-client-logging-jvm:2.3.10")
-    implementation("io.ktor:ktor-client-content-negotiation:2.3.10")
-    implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.10")
+    implementation(libs.ktor.client.logging.jvm)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.serialization.kotlinx.json)
 
     implementation(libs.koin.android)
 
